@@ -2,25 +2,35 @@ package woongjin.gatherMind.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProfileImageMapping {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long profileImageMappingId;
+    @Column(name = "profile_image_mapping_id")
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "file_id", nullable = false)
-    private FileMetadata file;
+    @OneToOne(fetch = FetchType.LAZY, optional = false) // FileMetadata와 1:1 관계
+    @JoinColumn(name = "file_id", nullable = false) // 외래 키 설정
+    private FileMetadata fileMetadata;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY) // Member와 1:1 관계
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    /**
+     * 프로필 이미지 URL 반환 메서드
+     * @return FileMetadata에 저장된 URL
+     */
+    public String getShortUrlKey() {
+        return (fileMetadata != null) ? fileMetadata.getShortUrlKey() : null;
+    }
 }

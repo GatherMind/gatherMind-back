@@ -1,0 +1,4 @@
+package woongjin.gatherMind.DTO;
+
+public class ProfileImageResponseDTO {
+}

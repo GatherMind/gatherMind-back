@@ -10,14 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.*;
-
-import woongjin.gatherMind.auth.CurrentMemberId;
-import woongjin.gatherMind.auth.MemberDetails;
 import woongjin.gatherMind.config.JwtTokenProvider;
-import woongjin.gatherMind.service.AnswerService;
-import woongjin.gatherMind.service.MemberService;
-import woongjin.gatherMind.service.QuestionService;
-import woongjin.gatherMind.service.StudyMemberService;
+import woongjin.gatherMind.entity.Member;
+import woongjin.gatherMind.service.*;
 
 import java.util.*;
 
@@ -100,28 +95,7 @@ public class MemberController {
 
     }
 
-    // security 적용한 회원 정보 조회
-//    @GetMapping("/me")
-//    public ResponseEntity<MemberDTO> getCurrentUserInfo(Authentication authentication) {
-//
-//        if (authentication == null || authentication.getPrincipal() == null) {
-//            return ResponseEntity.status(401).body(null); // 인증되지 않은 경우
-//        }
-//
-//        var memberDetails = (MemberDetails) authentication.getPrincipal();
-//        String memberId = memberDetails.getUsername(); // memberId를 얻습니다.
-//
-//        try {
-//
-//            MemberDTO memberDTO = memberService.getMember(memberId);
-//            return ResponseEntity.ok(memberDTO);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body(null); // 서비스 처리 중 에러 발생
-//        }
-//    }
 
-    // 회원 정보 수정 (닉네임과 비밀번호)
-    //    @PutMapping("/me")
     @Operation(
             summary = "내 정보 수정(닉네임, 비밀번호)"
     )
@@ -135,8 +109,6 @@ public class MemberController {
         return ResponseEntity.ok(memberService.updateMemberInfo(memberId, newNickname, newPassword));
     }
 
-    // 최근에 작성한 게시글(질문) 목록 조회
-//    @GetMapping("/me/questions")
     @Operation(
             summary = "최근 작성한 게시글(질문) 조회"
     )
@@ -152,7 +124,6 @@ public class MemberController {
         }
     }
 
-    // 최근에 작성한 답글 목록 조회
     //    @GetMapping("/me/answers")
     @Operation(
             summary = "최근 작성한 댓글 조회"
@@ -203,8 +174,6 @@ public class MemberController {
     }
 
 
-    // 회원 탈퇴
-    //    @DeleteMapping("/me")
     @Operation(
             summary = "회원 탈퇴"
     )
@@ -221,16 +190,17 @@ public class MemberController {
         }
     }
 
-
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberDTO> getMember(@PathVariable String memberId) {
-        MemberDTO memberDto = memberService.getMember(memberId);
-        return ResponseEntity.ok(memberDto);
+        Member member = memberService.findByMemberId(memberId);
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberId(member.getMemberId());
+        memberDTO.setEmail(member.getEmail());
+        memberDTO.setNickname(member.getNickname());
+        memberDTO.setProfileImage(member.getProfileImage()); // "/image/default-profile.jpg"
+        return ResponseEntity.ok(memberDTO);
     }
 
-
-    // 회원이 가입한 그룹(스터디) 목록 가져오기
-//    @GetMapping("/me/groups")
     @Operation(
             summary = "내 스터디 목록 조회"
     )

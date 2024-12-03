@@ -38,7 +38,6 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<StudyMember> studyMembers;
 
-    public void setMemberProfile(String profileImage) {
-        this.profileImage = profileImage;
-    }
+    @JoinColumn(name = "profile_image_mapping_id", referencedColumnName = "profile_image_mapping_id")
+    private ProfileImageMapping profileImageMapping;
 }

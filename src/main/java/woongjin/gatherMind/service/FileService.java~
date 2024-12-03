@@ -43,9 +43,6 @@ public class FileService {
     @Value("${aws.s3.bucket:YOUR_BUCKET}")
     private String bucketName;
 
-    @Value("${profile.image.upload.dir}")
-    private String profileImageUploadDir;
-
 
     private final S3Client s3Client;
     private final FileMetadataRepository fileMetadataRepository;
@@ -167,5 +164,4 @@ public class FileService {
         file.transferTo(tempFile);
         return tempFile;
     }
-
 }

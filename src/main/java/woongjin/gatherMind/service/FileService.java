@@ -93,7 +93,7 @@ public class FileService {
                 RequestBody.fromFile(file));
 
             logger.info("S3 업로드 성공: 파일 키 {}, 사용자 ID {}", key, memberId);
-// S3 URL 생성
+            // S3 URL 생성
             String fileUrl = generateFileUrl(key);
 
             // Short URL Key 생성 (개선된 로직 적용)

@@ -34,14 +34,6 @@ public class MemberService {
     private final AnswerRepository answerRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtTokenProvider jwtTokenProvider;
-    //    private final MemberIdProvider memberIdProvider;
-//    private final JwtUtil jwtUtil;
-
-    // 기본 프로필 이미지 URL
-//    private static final String DEFAULT_PROFILE_IMAGE_URL = "https://yourdomain.com/images/default-profile.png";
-
-
     public MemberAndStatusRoleDTO getMemberAndRoleByMemberId(String memberId, Long studyId) {
 
         return memberRepository.findMemberAndRoleByMemberId(memberId, studyId)
@@ -60,7 +52,7 @@ public class MemberService {
         member.setEmail(memberDTO3.getEmail());
         member.setNickname(memberDTO3.getNickname());
         member.setCreatedAt(LocalDateTime.now());
-        member.setProfileImage("/api/files/default-profile");
+        member.setProfileImage("/images/default-profile.png");
 
         memberRepository.save(member);
     }
@@ -214,4 +206,8 @@ public class MemberService {
         return nickname.length() >= 2 && nickname.length() <= 20 && nickname.matches("^[a-zA-Z0-9가-힣]+$");
     }
 
+    public Member findByMemberId(String memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with ID: " + memberId));
+    }
 }
