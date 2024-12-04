@@ -50,7 +50,7 @@ public class StudyController {
             summary = "스터디 수정",
             description = "스터디 ID를 경로 변수로 받아 해당 스터디의 정보를 수정합니다. 요청 본문에는 수정할 스터디 정보가 포함된 Study 객체를 전달합니다."
     )
-    public ResponseEntity<StudyInfoDTO> updateStudy(@PathVariable Long studyId, @RequestBody Study study, HttpServletRequest request) throws UnavailableException {
+    public ResponseEntity<StudyInfoDTO> updateStudy(@PathVariable Long studyId, @RequestBody Study study, HttpServletRequest request) {
         String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
         return ResponseEntity.ok(studyService.updateStudy(studyId, study, memberId));
     }
@@ -60,7 +60,7 @@ public class StudyController {
     @Operation(
             summary = "스터디 삭제"
     )
-    public ResponseEntity<StudyInfoDTO> deleteStudy(@PathVariable Long studyId,  HttpServletRequest request) throws UnavailableException {
+    public ResponseEntity<StudyInfoDTO> deleteStudy(@PathVariable Long studyId,  HttpServletRequest request) {
         String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
         studyService.deleteStudy(memberId, studyId);
         return ResponseEntity.noContent().build(); // 204 No Content

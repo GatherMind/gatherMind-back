@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import woongjin.gatherMind.DTO.AnswerDTO;
 import woongjin.gatherMind.DTO.AnswerDTOInQuestion;
+import woongjin.gatherMind.DTO.UpdateAnswerRequestDTO;
 import woongjin.gatherMind.entity.Answer;
 import woongjin.gatherMind.exception.unauthorized.UnauthorizedActionException;
 import woongjin.gatherMind.exception.notFound.AnswerNotFoundException;
@@ -83,13 +84,13 @@ public class AnswerService {
      * 기존 답변의 내용을 수정합니다.
      *
      * @param answerId 수정할 답변의 ID
-     * @param content  수정된 내용
+     * @param dto  수정된 내용
      * @param memberId 답변을 수정하려는 사용자의 ID
      * @return 수정된 답변을 DTO로 반환
      * @throws UnauthorizedActionException 사용자가 수정 권한이 없을 경우 예외 발생
      */
     @Transactional
-    public AnswerDTOInQuestion updateAnswer(Long answerId, String content, String memberId) {
+    public AnswerDTOInQuestion updateAnswer(Long answerId, UpdateAnswerRequestDTO dto, String memberId) {
         Answer answer = findByAnswerId(answerId);
 
         commonLookupService.findByMemberId(memberId);
@@ -98,7 +99,7 @@ public class AnswerService {
             throw new UnauthorizedActionException();
         }
 
-        answer.setContent(content);
+        answer.setContent(dto.getContent());
         Answer updatedAnswer = this.answerRepository.save(answer);
 
         return new AnswerDTOInQuestion(updatedAnswer);

@@ -9,4 +9,6 @@ public interface EntityFileMappingRepository extends JpaRepository<EntityFileMap
 
     List<EntityFileMapping> findByQuestion_QuestionId(Long questionId);
     EntityFileMapping findByFileMetadata_FileMetadataId(Long fileMetadataId);
+
+    List<EntityFileMapping> findByQuestion_QuestionIdAndFileMappingIdNot(Long questionId, Long fileMetaDataId);
 }
