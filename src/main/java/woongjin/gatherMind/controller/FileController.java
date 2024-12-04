@@ -73,19 +73,20 @@ public class FileController {
     }
 
     @Operation(
-            summary = "파일 업로드"
+            summary = "파일 업로드",
+            description = "에디터를 통해 첨부된 이미지 파일을 업로드합니다."
     )
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(HttpServletRequest request,
                                                     @RequestParam("files[]") List<MultipartFile> files) {
 
-//        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
-        String memberId = "member16";
+        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
         List<String> fileUrls = new ArrayList<>();
+        Boolean isContentEmbedded = true;
 
         try {
             for (MultipartFile file : files) {
-                FileUploadResponseDTO responseDTO = fileService.handleFileUpload(file, memberId);
+                FileUploadResponseDTO responseDTO = fileService.handleFileUpload(file, memberId, isContentEmbedded);
                 fileUrls.add(responseDTO.getFileUrl());
             }
             return ResponseEntity.ok(fileUrls);

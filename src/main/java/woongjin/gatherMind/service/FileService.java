@@ -57,7 +57,7 @@ public class FileService {
         }
     }
 
-    public FileUploadResponseDTO handleFileUpload(MultipartFile file, String memberId) {
+    public FileUploadResponseDTO handleFileUpload(MultipartFile file, String memberId, Boolean isContentEmbedded) {
         File tempFile = null;
         try {
             // 파일 유효성 검사
@@ -72,7 +72,7 @@ public class FileService {
 
             tempFile = prepareFile(file);
 
-            return uploadToS3(fileKey, tempFile, originalFileName, memberId);
+            return uploadToS3(fileKey, tempFile, originalFileName, memberId, isContentEmbedded);
         } catch (IOException e) {
             logger.error("File processing failed: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to process the uploaded file", e);
@@ -84,7 +84,7 @@ public class FileService {
         }
     }
 
-    private FileUploadResponseDTO uploadToS3(String key, File file, String originalFileName, String memberId) {
+    private FileUploadResponseDTO uploadToS3(String key, File file, String originalFileName, String memberId, Boolean isContentEmbedded) {
         try {
 
             s3Client.putObject(PutObjectRequest.builder()
@@ -106,6 +106,7 @@ public class FileService {
             metadata.setShortUrlKey(shortUrlKey);
             metadata.setFileSize(file.length());
             metadata.setUploadByUserId(memberId);
+            metadata.setContentEmbedded(isContentEmbedded);
 
             fileMetadataRepository.save(metadata);
 
