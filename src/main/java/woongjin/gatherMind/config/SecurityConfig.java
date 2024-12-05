@@ -34,11 +34,25 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
+                                "/api/member/login",
+                                "/api/member/signup",
+                                "/api/public/**",
+                                "/h2-console/**", // H2 Console 경로 접근 허용
+                                "/**",
+                                "/error",
+                                "/h2-console/**",
+                                "/study/**",
+                                "/basicauth",
+                                "/login",
+                                "studymember/**",
+                                "member/**",
+                                "/check",
+                                "/env",
                                 "/api/auth/**",
                                 "api/member/check-email",
                                 "api/member/check-nickname",
                                 "api/member/check-memberId",
-                                "/api/study",
+                                "/api/study/**",
                                 "/h2-console/**"
                         ).permitAll()
                         .anyRequest().authenticated()
