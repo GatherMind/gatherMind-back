@@ -5,8 +5,8 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import woongjin.gatherMind.exception.MissingTokenException;
-import woongjin.gatherMind.exception.invalid.InvalidTokenException;
+import woongjin.gatherMind.exception.unauthorized.MissingTokenException;
+import woongjin.gatherMind.exception.unauthorized.InvalidTokenException;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -14,14 +14,31 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+
     private final SecretKey secretKey;
     private final long expirationTime;
+
+
+
 
     // 생성자 주입: SecretKey와 만료 시간 설정
     public JwtTokenProvider(@Value("${jwt.expiration}") long expirationTime) {
         this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
         this.expirationTime = expirationTime;
     }
+
+//    public String createToken(String memberId) {
+//        Claims claims = Jwts.claims().setSubject(memberId);
+//        Date now = new Date();
+//        Date validity = new Date(now.getTime() + validityInMilliseconds);
+//
+//        return Jwts.builder()
+//                .setClaims(claims)
+//                .setIssuedAt(now)
+//                .setExpiration(validity)
+//                .signWith(secretKey)
+//                .compact();
+//    }
 
     // 토큰 생성
     public String createToken(String memberId) {
@@ -65,6 +82,11 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
+//JwtException이 처리하는 예외
+// MalformedJwtException: JWT 형식이 잘못되었을 때.
+// UnsupportedJwtException: 지원하지 않는 JWT가 전달되었을 때.
+// ExpiredJwtException: JWT가 만료되었을 때.
+// (SignatureException): JWT 서명이 유효하지 않을 때. (이제 JwtException으로 대체)
     // 토큰 유효성 검증
     public void validateToken(String token) {
         try {
@@ -73,9 +95,9 @@ public class JwtTokenProvider {
                     .build()
                     .parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
-            throw new InvalidTokenException("Token has expired", e);
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new InvalidTokenException("Invalid token", e);
+            throw new InvalidTokenException("Token has expired");
+        }  catch (JwtException | IllegalArgumentException e) {
+            throw new InvalidTokenException("Invalid token");
         }
     }
 
@@ -98,8 +120,9 @@ public class JwtTokenProvider {
         return getMemberIdFromToken(token);
     }
 
-    // 토큰에서 memberId를 직접 추출 (Deprecated된 메서드 수정)
     public String extractMemberIdFromToken(String token) {
-        return getClaims(token).getSubject(); // subject에 memberId 저장
+        validateToken(token);
+        return getMemberIdFromToken(token);
     }
+
 }

@@ -27,8 +27,10 @@ public class Member {
     private String email;
     private String password;
 
-    @Column(name = "profile_image")
-    private String profileImage;
+//    private boolean isEmailVerified = false; // 초기값 false
+
+    @Column(nullable = false)
+    private String profileImage = "/api/files/default-profile";
 
     @CreatedDate
     @Column(updatable = false)
@@ -37,10 +39,4 @@ public class Member {
     // Member - StudyMember (1:N)
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<StudyMember> studyMembers;
-
-    @Column(name = "profile_image_id")
-    private Long profileImageId;
-
-    @JoinColumn(name = "profile_image_mapping_id", referencedColumnName = "profile_image_mapping_id")
-    private ProfileImageMapping profileImageMapping;
 }

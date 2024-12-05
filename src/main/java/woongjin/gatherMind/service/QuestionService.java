@@ -2,19 +2,16 @@ package woongjin.gatherMind.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 import woongjin.gatherMind.DTO.*;
 import woongjin.gatherMind.entity.*;
-import woongjin.gatherMind.exception.member.MemberNotFoundException;
-import woongjin.gatherMind.exception.question.QuestionNotFoundException;
-import woongjin.gatherMind.exception.study.StudyNotFoundException;
-import woongjin.gatherMind.exception.studyMember.StudyMemberNotFoundException;
+import woongjin.gatherMind.exception.unauthorized.UnauthorizedActionException;
+import woongjin.gatherMind.exception.notFound.MemberNotFoundException;
+import woongjin.gatherMind.exception.notFound.QuestionNotFoundException;
+import woongjin.gatherMind.exception.notFound.StudyNotFoundException;
 import woongjin.gatherMind.repository.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,43 +21,29 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final StudyMemberRepository studyMemberRepository;
-    private final MemberRepository memberRepository;
-    private final StudyRepository studyRepository;
-    private final FileService fileService;
     private final FileMetadataRepository fileMetadataRepository;
     private final EntityFileMappingRepository entityFileMappingRepository;
 
-    // 질문(게시글) 생성
+    private final CommonLookupService commonLookupService;
+    private final FileService fileService;
 
-    public Question createQuestion(QuestionCreateDTO questionDTO, String memberId, Long studyId) {
-
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found"));
-
-        Study studyNotFound = studyRepository.findById(studyId)
-                .orElseThrow(() -> new StudyNotFoundException("Study not found"));
-
-        StudyMember studyMember = this.studyMemberRepository
-                .findByMember_MemberIdAndStudy_StudyId(memberId, studyId)
-                .orElseThrow(() -> new StudyMemberNotFoundException("not found studyMember by memberId and studyId"));
-
-        Question question = toEntity(questionDTO);
-        question.setStudyMember(studyMember);
-
-        return this.questionRepository.save(question);
-    }
-
+    /**
+     * 질문 생성
+     *
+     * @param questionDTO 질문 생성 정보
+     * @param memberId    생성하는 회원 ID
+     * @param studyId     소속 스터디 ID
+     * @return 생성된 질문 객체
+     * @throws MemberNotFoundException 회원 ID가 존재하지 않을 경우
+     * @throws StudyNotFoundException  스터디 ID가 존재하지 않을 경우
+     */
     @Transactional
     public Question createQuestionWithFile(QuestionCreateWithFileDTO questionDTO, String memberId, Long studyId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(MemberNotFoundException::new);
-        Study study = studyRepository.findById(studyId)
-                .orElseThrow(StudyNotFoundException::new);
-        StudyMember studyMember = this.studyMemberRepository
-                .findByMember_MemberIdAndStudy_StudyId(memberId, studyId)
-                .orElseThrow(StudyMemberNotFoundException::new);
+        Member byMemberId = commonLookupService.findByMemberId(memberId);
+        Study study = commonLookupService.findStudyByStudyId(studyId);
+
+        StudyMember studyMember = commonLookupService.findByMemberIdAndStudyId(memberId, studyId);
 
         Question question = new Question();
         question.setOption(questionDTO.getOption());
@@ -69,117 +52,47 @@ public class QuestionService {
         question.setStudyMember(studyMember);
 
         Question savedQuestion = this.questionRepository.save(question);
-
-        Optional.ofNullable(questionDTO.getFile())
-                .filter(file -> !file.isEmpty())
-                .ifPresent(file -> {
-                    EntityFileMapping entityFileMapping = new EntityFileMapping();
-                    entityFileMapping.setQuestion(question);
-                    entityFileMapping.setStudyMember(studyMember);
-
-                    fileService.handleFileUpload(file, memberId, entityFileMapping);
-                });
+        handleFileForQuestion(questionDTO, savedQuestion, memberId);
 
         return savedQuestion;
     }
 
-    // 질문 상세 데이터 조회
-    public QuestionInfoDTO getQuestion(Long questionId) {
-        Question question = this.questionRepository
-                .findById(questionId)
-                .orElseThrow(() -> new QuestionNotFoundException(questionId));
+    /**
+     * 질문 조회 (파일 포함)
+     *
+     * @param questionId 조회할 질문 ID
+     * @return 질문 및 파일 URL DTO
+     * @throws QuestionNotFoundException 질문 ID가 존재하지 않을 경우
+     */
+    public QuestionWithFileUrlDTO getQuestionWithFileUrl(Long questionId) {
 
-        Member member = this.memberRepository.findById(question.getStudyMember().getMember().getMemberId())
-                .orElseThrow(() -> new MemberNotFoundException(question.getStudyMember().getMember().getMemberId()));
-
-        return QuestionInfoDTO.builder()
-                .questionId(question.getQuestionId())
-                .option(question.getOption())
-                .title(question.getTitle())
-                .content(question.getContent())
-                .createdAt(question.getCreatedAt())
-                .memberId(member.getMemberId())
-                .nickname(member.getNickname())
-                .build();
-    }
-
-
-    public QuestionWithFileUrlDTO getQuestionWithUrl(Long questionId) {
-        Question question = this.questionRepository
-                .findById(questionId)
-                .orElseThrow(() -> new QuestionNotFoundException(questionId));
-
-        Member member = this.memberRepository.findById(question.getStudyMember().getMember().getMemberId())
-                .orElseThrow(() -> new MemberNotFoundException(question.getStudyMember().getMember().getMemberId()));
-
+        Question question = findByQuestionId(questionId);
         FileMetadataUrlDTO fileMetaDTO = fileMetadataRepository.findByEntityFileMapping_Question_QuestionId(questionId);
 
-        String fullUrlByKey = fileService.getFullUrlByKey(fileMetaDTO.getFileKey());
-
-        return QuestionWithFileUrlDTO.builder()
-                .questionId(question.getQuestionId())
-                .option(question.getOption())
-                .title(question.getTitle())
-                .content(question.getContent())
-                .createdAt(question.getCreatedAt())
-                .memberId(member.getMemberId())
-                .nickname(member.getNickname())
-                .fileName(fileMetaDTO.getFileName())
-                .url(fullUrlByKey)
-                .build();
-    }
-
-    public Optional<Question> getQuestionById(Long questionId) {
-        return questionRepository.findById(questionId);
-    }
-
-    public List<QuestionDTO> findRecentQuestionsByMemberId(String memberId) {
-        List<Question> questions = questionRepository.findTop3ByMember_MemberIdOrderByCreatedAtDesc(memberId);
-        return questions.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
-
-    // 질문 수정
-    public Question updateQuestion(Long questionId, Question question, String memberId) {
-        Question originQuestion = this.questionRepository
-                .findById(questionId)
-                .orElseThrow(() -> new QuestionNotFoundException("not found question by id"));
-
-        this.memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("not found Member by memberId"));
-        if (!originQuestion.getStudyMember().getMember().getMemberId().equals(memberId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+        String fileName = "";
+        String fullUrlByKey = "";
+        if (fileMetaDTO != null) {
+            fullUrlByKey = fileService.getFullUrlByKey(fileMetaDTO.getFileKey());
+            fileName = fileMetaDTO.getFileName();
         }
 
-        originQuestion.setOption(question.getOption());
-        originQuestion.setTitle(question.getTitle());
-        originQuestion.setContent(question.getContent());
-
-        return this.questionRepository.save(originQuestion);
+        return new QuestionWithFileUrlDTO(question, fileName, fullUrlByKey);
     }
 
-    // 질문 수정
+    /**
+     * 질문 수정
+     *
+     * @param questionId  수정할 질문 ID
+     * @param questionDTO 수정 정보
+     * @param memberId    수정하는 회원 ID
+     * @return 수정된 질문 객체
+     */
+    @Transactional
     public Question updateQuestionWithFile(Long questionId, QuestionCreateWithFileDTO questionDTO, String memberId) {
-        Question originQuestion = this.questionRepository
-                .findById(questionId)
-                .orElseThrow(() -> new QuestionNotFoundException(questionId));
 
-        this.memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException(memberId));
+        Question originQuestion = checkQuestionOwnership(questionId, memberId);
 
-
-        if (!originQuestion.getStudyMember().getMember().getMemberId().equals(memberId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
-        }
-
-        EntityFileMapping existingMapping = entityFileMappingRepository.findByQuestion_QuestionId(questionId);
-
-        if(existingMapping != null){
-            fileMetadataRepository.delete(existingMapping.getFileMetadata());
-            entityFileMappingRepository.delete(existingMapping);
-            fileService.deleteFileFromS3(existingMapping.getFileMetadata().getFileKey());
-        }
+//        deleteExistingFilesForQuestion(questionId);
 
         originQuestion.setOption(questionDTO.getOption());
         originQuestion.setTitle(questionDTO.getTitle());
@@ -187,66 +100,111 @@ public class QuestionService {
 
         Question savedQuestion = this.questionRepository.save(originQuestion);
 
-        Optional.ofNullable(questionDTO.getFile())
-                .filter(file -> !file.isEmpty())
-                .ifPresent(file -> {
-                    EntityFileMapping entityFileMapping = new EntityFileMapping();
-                    entityFileMapping.setQuestion(savedQuestion);
-                    entityFileMapping.setStudyMember(savedQuestion.getStudyMember());
+        handleFileForQuestion(questionDTO, savedQuestion, memberId);
 
-                    fileService.handleFileUpload(file, memberId, entityFileMapping);
-                });
-
-        return this.questionRepository.save(originQuestion);
+        return savedQuestion;
     }
 
-    // 질문 삭제
+    /**
+     * 질문 삭제
+     *
+     * @param questionId 삭제할 질문 ID
+     * @param memberId   삭제하는 회원 ID
+     * @throws UnauthorizedActionException 질문에 대한 권한이 없을 경우
+     */
+    @Transactional
     public void deleteQuestion(Long questionId, String memberId) {
-        Question question = this.questionRepository
-                .findById(questionId)
-                .orElseThrow(() -> new QuestionNotFoundException("not found question by id"));
 
-        this.memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("not found Member by memberId"));
-        if (!question.getStudyMember().getMember().getMemberId().equals(memberId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
-        }
+        Question question = checkQuestionOwnership(questionId, memberId);
+
+        deleteExistingFilesForQuestion(questionId);
 
         this.questionRepository.delete(question);
     }
 
-    private Question toEntity(QuestionCreateDTO dto) {
-        Question question = new Question();
-        question.setOption(dto.getOption());
-        question.setTitle(dto.getTitle());
-        question.setContent(dto.getContent());
-        return question;
+    /**
+     * 특정 회원이 작성한 최근 질문 목록 조회
+     *
+     * @param memberId 회원 ID
+     * @return 질문 DTO 목록
+     */
+    public List<QuestionDTO> findRecentQuestionsByMemberId(String memberId) {
+        List<Question> top3ByStudyMemberMemberMemberIdOrderByCreatedAtDesc =
+                questionRepository.findTop3ByStudyMember_Member_MemberIdOrderByCreatedAtDesc(memberId);
+        return top3ByStudyMemberMemberMemberIdOrderByCreatedAtDesc.stream().map(QuestionDTO::new).collect(Collectors.toList());
     }
 
-    public QuestionDTO convertToDto(Question question) {
-        QuestionDTO dto = new QuestionDTO();
-        dto.setQuestionId(question.getQuestionId());
-        dto.setContent(question.getContent());
-        dto.setCreatedAt(question.getCreatedAt());
-        dto.setTitle(question.getTitle());
-
-        // studyTitle 설정
-        if (question.getStudy() != null) { // Study가 null이 아닌 경우에만 설정
-            dto.setStudyTitle(question.getStudy().getTitle());
-        }
-
-        return dto;
-    }
-
-    public List<QuestionDTO> findQuestionsByMemberId(String memberId) {
-        List<Question> questions = questionRepository.findByMemberId(memberId);
-        return questions.stream()
-                .map(QuestionDTO::new)
-                .collect(Collectors.toList());
-    }
-
+    /**
+     * 특정 회원이 작성한 질문 수 조회
+     *
+     * @param memberId 회원 ID
+     * @return 질문 개수
+     */
     public long countQuestionsByMemberId(String memberId) {
         return questionRepository.countByMemberId(memberId);
     }
 
+    /**
+     * 질문 ID로 질문 객체 조회
+     *
+     * @param questionId 질문 ID
+     * @return 질문 객체
+     * @throws QuestionNotFoundException 질문이 존재하지 않을 경우
+     */
+    public Question findByQuestionId(Long questionId) {
+        return questionRepository.findById(questionId).orElseThrow(() -> new QuestionNotFoundException(questionId));
+    }
+
+    /**
+     * 질문 소유권 확인
+     *
+     * @param questionId 질문 ID
+     * @param memberId   회원 ID
+     * @return 질문 객체
+     * @throws UnauthorizedActionException 질문에 대한 권한이 없을 경우
+     */
+    private Question checkQuestionOwnership(Long questionId, String memberId) {
+        Question question = findByQuestionId(questionId);
+        commonLookupService.checkMemberExists(memberId);
+
+        if (!question.getStudyMember().getMember().getMemberId().equals(memberId)) {
+            throw new UnauthorizedActionException("이 질문에 대한 권한이 없습니다.");
+        }
+        return question;
+    }
+
+    /**
+     * 질문과 관련된 파일 처리
+     *
+     * @param questionDTO 질문 정보 DTO
+     * @param question    질문 객체
+     * @param memberId    회원 ID
+     */
+    private void handleFileForQuestion(QuestionCreateWithFileDTO questionDTO, Question question, String memberId) {
+        Optional.ofNullable(questionDTO.getFile())
+                .filter(file -> !file.isEmpty())
+                .ifPresent(file -> {
+                    deleteExistingFilesForQuestion(question.getQuestionId());
+                    EntityFileMapping entityFileMapping = new EntityFileMapping();
+                    entityFileMapping.setQuestion(question);
+                    entityFileMapping.setStudyMember(question.getStudyMember());
+                    fileService.handleFileUpload(file, memberId, entityFileMapping);
+                });
+    }
+
+    /**
+     * 질문과 관련된 기존 파일 삭제
+     *
+     * @param questionId 질문 ID
+     */
+    private void deleteExistingFilesForQuestion(Long questionId) {
+        EntityFileMapping existingMapping = entityFileMappingRepository.findByQuestion_QuestionId(questionId);
+
+        if (existingMapping != null) {
+            entityFileMappingRepository.delete(existingMapping);
+            fileMetadataRepository.delete(existingMapping.getFileMetadata());
+            fileService.deleteFileFromS3(existingMapping.getFileMetadata().getFileKey());
+        }
+
+    }
 }
