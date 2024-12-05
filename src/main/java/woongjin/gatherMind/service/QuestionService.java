@@ -81,8 +81,8 @@ public class QuestionService {
     public QuestionWithFileUrlDTO getQuestionWithFileUrl(Long questionId) {
 
         Question question = findByQuestionId(questionId);
-        Optional<FileMetadataUrlDTO> fileMetaDTO = fileMetadataRepository.findNonImageFilesByQuestionId(questionId);
-//        FileMetadataUrlDTO fileMetaDTO = fileMetadataRepository.findByEntityFileMapping_Question_QuestionId(questionId);
+        Optional<FileMetadataUrlDTO> fileMetaDTO = fileMetadataRepository.findNonEmbeddedFilesByQuestionId(questionId);
+//        Optional<FileMetadataUrlDTO> fileMetaDTO = fileMetadataRepository.findNonImageFilesByQuestionId(questionId);
 
         String fileName = "";
         String fullUrlByKey = "";
@@ -225,7 +225,9 @@ public class QuestionService {
                     EntityFileMapping entityFileMapping = new EntityFileMapping();
                     entityFileMapping.setQuestion(question);
                     entityFileMapping.setStudyMember(question.getStudyMember());
-                    FileUploadResponseDTO responseDTO = fileService.handleFileUpload(file, memberId);
+                    Boolean isContentEmbedded = false;
+
+                    FileUploadResponseDTO responseDTO = fileService.handleFileUpload(file, memberId, isContentEmbedded);
 
                     FileMetadata metadata = fileMetadataRepository.findByFileKey(responseDTO.getFileKey())
                             .orElseThrow(() -> new RuntimeException("Metadata not found for fileKey: " + responseDTO.getFileKey()));

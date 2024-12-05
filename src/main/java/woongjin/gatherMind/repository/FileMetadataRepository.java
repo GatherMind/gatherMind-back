@@ -19,15 +19,22 @@ public interface FileMetadataRepository extends JpaRepository<FileMetadata, Long
 
     FileMetadataUrlDTO findByEntityFileMapping_Question_QuestionId(Long questionId);
 
+//    @Query("SELECT new woongjin.gatherMind.DTO.FileMetadataUrlDTO(f.fileMetadataId, f.fileName, f.shortUrlKey, f.fileKey, f.fileSize, f.uploadByUserId) " +
+//            "FROM FileMetadata f " +
+//            "JOIN f.entityFileMapping efm " +
+//            "WHERE efm.question.questionId = :questionId " +
+//            "AND (f.fileKey NOT LIKE '%.jpg' " +
+//            "AND f.fileKey NOT LIKE '%.jpeg' " +
+//            "AND f.fileKey NOT LIKE '%.png' " +
+//            "AND f.fileKey NOT LIKE '%.gif')") // 이미지 확장자 제외 조건
+//    Optional<FileMetadataUrlDTO> findNonImageFilesByQuestionId(@Param("questionId") Long questionId);
+
     @Query("SELECT new woongjin.gatherMind.DTO.FileMetadataUrlDTO(f.fileMetadataId, f.fileName, f.shortUrlKey, f.fileKey, f.fileSize, f.uploadByUserId) " +
             "FROM FileMetadata f " +
             "JOIN f.entityFileMapping efm " +
             "WHERE efm.question.questionId = :questionId " +
-            "AND (f.fileKey NOT LIKE '%.jpg' " +
-            "AND f.fileKey NOT LIKE '%.jpeg' " +
-            "AND f.fileKey NOT LIKE '%.png' " +
-            "AND f.fileKey NOT LIKE '%.gif')") // 이미지 확장자 제외 조건
-    Optional<FileMetadataUrlDTO> findNonImageFilesByQuestionId(@Param("questionId") Long questionId);
+            "AND f.isContentEmbedded = false")
+    Optional<FileMetadataUrlDTO> findNonEmbeddedFilesByQuestionId(@Param("questionId") Long questionId);
 
     boolean existsByShortUrlKey(String shortUrlKey);
 }

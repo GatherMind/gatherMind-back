@@ -27,6 +27,7 @@ public class FileMetadata {
     private String fileKey; // S3에서 사용되는 고유 Key
     private Long fileSize; // 파일 크기
     private String uploadByUserId; // 업로더 ID
+    private boolean isContentEmbedded; // 본문 포함 여부
 
     @CreatedDate
     @Column(updatable = false)
