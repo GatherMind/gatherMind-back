@@ -2,16 +2,22 @@ package woongjin.gatherMind.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.*;
 
 import woongjin.gatherMind.config.JwtTokenProvider;
+import woongjin.gatherMind.entity.Member;
+import woongjin.gatherMind.exception.invalid.InvalidNicknameException;
+import woongjin.gatherMind.exception.invalid.InvalidPasswordException;
 import woongjin.gatherMind.service.*;
 import woongjin.gatherMind.validation.UniqueEmailValidator;
 import woongjin.gatherMind.validation.UniqueMemberIdValidator;
@@ -35,6 +41,7 @@ public class MemberController {
     private final UniqueMemberIdValidator uniqueMemberIdValidator;
     private final UniqueEmailValidator uniqueEmailValidator;
     private final CommonLookupService commonLookupService;
+    private final PasswordEncoder passwordEncoder;
 
 
     /**
@@ -53,27 +60,6 @@ public class MemberController {
     }
 
     /**
-     * 회원가입 처리
-     */
-    @Operation(summary = "회원가입", description = "회원가입을 처리합니다.")
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody MemberDTO memberDTO) {
-        memberService.signup(memberDTO); // 회원가입 처리
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("회원가입이 완료되었습니다."); // 성공 메시지 반환
-
-    }
-
-    /**
-     * 로그인 처리
-     */
-    @Operation(summary = "로그인", description = "회원 로그인을 처리하고 JWT 토큰을 반환합니다.")
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-        return ResponseEntity.ok(Collections.singletonMap("token", memberService.authenticate(loginDTO)));
-    }
-
-    /**
      * 내 정보 조회
      */
     @Operation(summary = "내 정보 조회", description = "로그인된 회원의 정보를 조회합니다.")
@@ -83,39 +69,34 @@ public class MemberController {
         return ResponseEntity.ok(new MemberDTO(commonLookupService.findByMemberId(memberId)));
     }
 
-    // security 적용한 회원 정보 조회
-//    @GetMapping("/me")
-//    public ResponseEntity<MemberDTO> getCurrentUserInfo(Authentication authentication) {
-//
-//        if (authentication == null || authentication.getPrincipal() == null) {
-//            return ResponseEntity.status(401).body(null); // 인증되지 않은 경우
-//        }
-//
-//        var memberDetails = (MemberDetails) authentication.getPrincipal();
-//        String memberId = memberDetails.getUsername(); // memberId를 얻습니다.
-//
-//        try {
-//
-//            MemberDTO memberDTO = memberService.getMember(memberId);
-//            return ResponseEntity.ok(memberDTO);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body(null); // 서비스 처리 중 에러 발생
-//        }
-//    }
-
     /**
      * 회원 정보 수정 (닉네임, 비밀번호)
      */
-    //    @PutMapping("/me")
     @Operation(summary = "회원 정보 수정", description = "로그인된 회원의 닉네임과 비밀번호를 수정합니다.")
     @PutMapping("/update")
-    public ResponseEntity<String> updateMemberInfo(HttpServletRequest request, @RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> updateMemberInfo(
+            HttpServletRequest request,
+            @RequestBody Map<String, String> requestBody) {
+        try {
+            // JWT에서 memberId 추출
+            String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
 
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
-        String newNickname = requestBody.get("nickname");
-        String newPassword = requestBody.get("password");
+            // 요청에서 닉네임과 비밀번호 추출
+            String newNickname = requestBody.get("nickname");
+            String newPassword = requestBody.get("password");
 
-        return ResponseEntity.ok(memberService.updateMemberInfo(memberId, newNickname, newPassword));
+            // 서비스 메서드 호출로 수정 진행
+            String responseMessage = memberService.updateMemberInfo(memberId, newNickname, newPassword);
+
+            // 성공 메시지 반환
+            return ResponseEntity.ok(responseMessage);
+        } catch (InvalidNicknameException | InvalidPasswordException e) {
+            // 유효하지 않은 닉네임 또는 비밀번호 예외 처리
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            // 기타 예외 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 정보 수정 중 오류가 발생했습니다.");
+        }
     }
 
     /**

@@ -23,6 +23,8 @@ public class FileMetadata {
     private Long fileMetadataId;
 
     private String fileName; // 업로드된 원본 파일 이름
+
+    @Column(name = "short_url_key", nullable = false)
     private String shortUrlKey; // 단축 URL 키
     private String fileKey; // S3에서 사용되는 고유 Key
     private Long fileSize; // 파일 크기
@@ -41,4 +43,5 @@ public class FileMetadata {
         this.fileName = fileName;
         this.fileSize = fileSize;
     }
+
 }

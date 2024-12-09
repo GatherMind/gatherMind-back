@@ -1,6 +1,7 @@
 package woongjin.gatherMind.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import woongjin.gatherMind.DTO.*;
@@ -106,6 +107,15 @@ public class MemberService {
         return jwtTokenProvider.createToken(loginDTO.getMemberId());
     }
 
+    public String PasswordVerify(PasswordVerifyDTO passwordVerifyDTO) {
+
+        Member member = commonLookupService.findByMemberId(passwordVerifyDTO.getMemberId());
+        if (!passwordEncoder.matches(passwordVerifyDTO.getPassword(), member.getPassword())) {
+            throw new InvalidPasswordException("비밀번호가 잘못되었습니다.");
+        }
+        return jwtTokenProvider.createToken(passwordVerifyDTO.getMemberId());
+    }
+
     /**
      * 회원 정보 조회
      *
@@ -117,7 +127,6 @@ public class MemberService {
         Member member = commonLookupService.findByMemberId(memberId);
         return new MemberDTO(member);
     }
-
 
     /**
      * 회원 탈퇴
@@ -144,23 +153,36 @@ public class MemberService {
     @Transactional
     public String updateMemberInfo(String memberId, String newNickname, String newPassword) {
         Member member = commonLookupService.findByMemberId(memberId);
+        System.out.println("DB에서 찾은 회원 정보: " + member);
+
         List<String> successMessages = new ArrayList<>();
 
-        // 닉네임 변경
-        validateAndUpdateField(member, newNickname, nicknameValidator, member::setNickname, true);
         if (newNickname != null && !newNickname.isEmpty() && !newNickname.equals(member.getNickname())) {
-            successMessages.add(String.format("닉네임이 '%s'에서 '%s'으로 변경되었습니다.", member.getNickname(), newNickname));
+            nicknameValidator.validate(newNickname);
+            member.setNickname(newNickname);
+            successMessages.add("닉네임 변경 성공");
         }
 
-        validateAndUpdateField(member, newNickname, passwordValidator,
-                password -> member.setPassword(passwordEncoder.encode(password)), false);
         if (newPassword != null && !newPassword.isEmpty()) {
-            successMessages.add("비밀번호가 안전하게 변경되었습니다.");
+            if (passwordEncoder.matches(newPassword, member.getPassword())) {
+                throw new InvalidPasswordException("기존 비밀번호와 동일한 비밀번호는 사용할 수 없습니다.");
+            }
+
+            passwordValidator.validate(newPassword);
+            member.setPassword(passwordEncoder.encode(newPassword));
+            successMessages.add("비밀번호 변경 성공");
         }
 
+        if (successMessages.isEmpty()) {
+            return "수정된 내용이 없습니다.";
+        }
+
+//        변경사항 저장
         memberRepository.save(member);
-        return successMessages.isEmpty() ? "수정된 내용이 없습니다." : String.join("\n", successMessages);
+        return String.join(", ", successMessages);
     }
+
+
 
     /**
      * 최근 답글 조회
@@ -226,4 +248,5 @@ public class MemberService {
                 .orElseThrow(() -> new UsernameNotFoundException("회원 ID를 찾을 수 없습니다: " + memberId));
         return new MemberDetails(member);
     }
+
 }
