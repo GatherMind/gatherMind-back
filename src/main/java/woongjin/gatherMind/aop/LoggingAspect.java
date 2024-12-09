@@ -1,5 +1,6 @@
 package woongjin.gatherMind.aop;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -58,17 +59,32 @@ public class LoggingAspect {
                 return arg;
             }
 
+            // 객체 복사
+            Object clonedArg = cloneObject(arg);
 
             for (Field field : clazz.getDeclaredFields()) {
                 field.setAccessible(true);
                 if (field.getName().toLowerCase().contains("password")) {
-                    field.set(arg, "********");
+                    field.set(clonedArg, "********");
                 }
             }
+            return clonedArg;
         } catch (IllegalAccessException e) {
             log.error("Error masking sensitive data", e);
+            return arg;
         }
-        return arg;
+
+    }
+
+    private Object cloneObject(Object source) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(source);
+            return objectMapper.readValue(json, source.getClass());
+        } catch (Exception e) {
+            log.error("Error cloning object", e);
+            return source; // 복제가 실패하면 원본 반환
+        }
     }
 
 }

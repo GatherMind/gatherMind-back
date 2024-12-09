@@ -3,6 +3,7 @@ package woongjin.gatherMind.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class AnswerController {
             summary = "댓글 생성"
     )
     @PostMapping
-    public ResponseEntity<AnswerDTOInQuestion> createAnswer(HttpServletRequest request, @RequestBody AnswerCreateRequestDTO answerDTO) {
+    public ResponseEntity<AnswerDTOInQuestion> createAnswer(HttpServletRequest request,@Valid @RequestBody AnswerCreateRequestDTO answerDTO) {
         String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(answerService.createAnswer(answerDTO, memberId));
     }
@@ -49,7 +50,7 @@ public class AnswerController {
     public ResponseEntity<AnswerDTOInQuestion> updateAnswer(
             HttpServletRequest request,
             @PathVariable Long id,
-            @RequestBody UpdateAnswerRequestDTO dto)
+            @Valid @RequestBody UpdateAnswerRequestDTO dto)
     {
         String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
         return ResponseEntity.status(HttpStatus.OK).body(answerService.updateAnswer(id, dto, memberId));
