@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.LoginDTO;
 import woongjin.gatherMind.DTO.MemberDTO;
+import woongjin.gatherMind.DTO.PasswordVerifyDTO;
 import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.repository.MemberRepository;
 import woongjin.gatherMind.service.EmailService;
@@ -32,7 +33,6 @@ public class AuthController {
         return ResponseEntity.ok(Collections.singletonMap("token", memberService.authenticate(loginDTO)));
     }
 
-
     /**
      * 회원가입 처리
      */
@@ -43,6 +43,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("회원가입이 완료되었습니다."); // 성공 메시지 반환
 
+    }
+
+    @PostMapping("/validate-password")
+    public ResponseEntity<?> PasswordVerify(@RequestBody PasswordVerifyDTO passwordVerifyDTO) {
+        return ResponseEntity.ok(memberService.PasswordVerify(passwordVerifyDTO));
     }
 
 //    @PostMapping("/login")
