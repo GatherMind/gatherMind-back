@@ -34,25 +34,26 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                "/api/member/login",
-                                "/api/member/signup",
-                                "/api/public/**",
+//                                "/api/member/login",
+//                                "/api/member/signup",
+//                                "/api/public/**",
+//                                "/**",
+//                                "/error",
+//                                "/h2-console/**",
+//                                "/study/**",
+//                                "/basicauth",
+//                                "/login",
+//                                "studymember/**",
+//                                "member/**",
+//                                "/check",
+//                                "/env",
                                 "/h2-console/**", // H2 Console 경로 접근 허용
-                                "/**",
-                                "/error",
-                                "/h2-console/**",
-                                "/study/**",
-                                "/basicauth",
-                                "/login",
-                                "studymember/**",
-                                "member/**",
-                                "/check",
-                                "/env",
                                 "/api/auth/**",
-                                "api/member/check-email",
-                                "api/member/check-nickname",
-                                "api/member/check-memberId",
-                                "/api/study/**",
+                                "/api/member/check-email",
+                                "/api/member/check-nickname",
+                                "/api/member/check-memberId",
+                                "/api/study/getallstudies",
+                                "/api/study-categories/**",
                                 "/h2-console/**"
                         ).permitAll()
                         .anyRequest().authenticated()

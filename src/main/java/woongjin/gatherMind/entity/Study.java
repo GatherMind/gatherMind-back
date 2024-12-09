@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import woongjin.gatherMind.DTO.StudyCreateRequestDTO;
+import woongjin.gatherMind.enums.StudyCategory;
 import woongjin.gatherMind.enums.StudyStatus;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class Study {
     private String title;
     private String description;
     private StudyStatus status;
+    private StudyCategory category;
 
     @CreatedDate
     @Column(updatable = false)

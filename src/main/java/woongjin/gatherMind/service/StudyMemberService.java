@@ -141,6 +141,25 @@ public class StudyMemberService {
     }
 
     /**
+     * 스터디 멤버 삭제
+     *
+     * @param memberId 회원 ID
+     * @param studyId  탈퇴할 스터디 ID
+     * @throws UnauthorizedActionException 관리자가 승인 권한이 없을 경우
+     * @throws InvalidMemberStateException 멤버 상태가 PENDING이 아닌 경우
+     */
+    @Transactional
+    public void withdrawStudyMember(String memberId, Long studyId) {
+
+        commonLookupService.checkMemberExists(memberId);
+        commonLookupService.findStudyByStudyId(studyId);
+
+        StudyMember studyMember = commonLookupService.findByMemberIdAndStudyId(memberId, studyId);
+
+        studyMemberRepository.delete(studyMember);
+    }
+
+    /**
      * 회원 ID로 가입한 스터디 목록 조회
      *
      * @param memberId 회원 ID

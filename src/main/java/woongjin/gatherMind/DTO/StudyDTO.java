@@ -3,6 +3,7 @@ package woongjin.gatherMind.DTO;
 import lombok.*;
 import woongjin.gatherMind.entity.Study;
 import woongjin.gatherMind.entity.StudyMember;
+import woongjin.gatherMind.enums.StudyCategory;
 import woongjin.gatherMind.enums.StudyStatus;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class StudyDTO {
     private String title;
     private String description;
     private StudyStatus status;
+    private StudyCategory category;
     private LocalDateTime createdAt;
 
     public StudyDTO(String title, String description) {
@@ -37,5 +39,7 @@ public class StudyDTO {
         this.title = title;
         this.description = description;
     }
+
+
 
 }
