@@ -1,0 +1,25 @@
+package woongjin.gatherMind.controller;
+
+import org.springframework.ui.Model;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/oauth2")
+public class OAuth2LoginController {
+
+    @GetMapping("/login-success")
+    public String loginSuccess(Model model, @AuthenticationPrincipal OAuth2User oauth2User) {
+        model.addAttribute("name", oauth2User.getAttribute("name"));
+        model.addAttribute("email", oauth2User.getAttribute("email"));
+        return "oauth2LoginSuccess"; // 성공 페이지 (템플릿 파일)
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "oauth2Login"; // 커스텀 로그인 페이지
+    }
+}
