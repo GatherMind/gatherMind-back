@@ -1,0 +1,18 @@
+package woongjin.gatherMind.controller;
+
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+
+    @RequestMapping(value = {"/", "/login", "/signup", "/mypage", "/mypage/act",
+            "/editprofile", "/goodbye", "/serious", "/login-success"})
+    public String index() {
+        return "forward:/index.html";
+    }
+}

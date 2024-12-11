@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class QuestionWithFileUrlDTO {
     private Long questionId;
+    private Long fileMetadataId;
     private QuestionOption option;
     private String title;
     private String content;
@@ -22,7 +23,7 @@ public class QuestionWithFileUrlDTO {
     private String fileName;
     private String url;
 
-    public QuestionWithFileUrlDTO(Question question, String fileName, String url) {
+    public QuestionWithFileUrlDTO(Question question, String fileName, String url, Long fileMetadataId) {
         this.questionId = question.getQuestionId();
         this.option = question.getOption();
         this.title = question.getTitle();
@@ -32,5 +33,6 @@ public class QuestionWithFileUrlDTO {
         this.nickname = question.getStudyMember().getMember().getNickname();
         this.fileName = fileName;
         this.url = url;
+        this.fileMetadataId = fileMetadataId;
     }
 }

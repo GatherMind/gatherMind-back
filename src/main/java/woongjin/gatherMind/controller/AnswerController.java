@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import woongjin.gatherMind.DTO.AnswerCreateRequestDTO;
 import woongjin.gatherMind.DTO.AnswerDTO;
 import woongjin.gatherMind.DTO.AnswerDTOInQuestion;
+import woongjin.gatherMind.DTO.UpdateAnswerRequestDTO;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.entity.Answer;
 import woongjin.gatherMind.service.AnswerService;
@@ -45,9 +46,13 @@ public class AnswerController {
             summary = "댓글 수정"
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AnswerDTOInQuestion> updateAnswer(HttpServletRequest request, @PathVariable Long id, @RequestBody String content) {
+    public ResponseEntity<AnswerDTOInQuestion> updateAnswer(
+            HttpServletRequest request,
+            @PathVariable Long id,
+            @RequestBody UpdateAnswerRequestDTO dto)
+    {
         String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
-        return ResponseEntity.status(HttpStatus.OK).body(answerService.updateAnswer(id, content, memberId));
+        return ResponseEntity.status(HttpStatus.OK).body(answerService.updateAnswer(id, dto, memberId));
     }
 
     // 댓글 삭제

@@ -1,7 +1,10 @@
 package woongjin.gatherMind.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -9,8 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -27,6 +29,7 @@ public class FileMetadata {
     private String fileKey; // S3에서 사용되는 고유 Key
     private Long fileSize; // 파일 크기
     private String uploadByUserId; // 업로더 ID
+    private boolean isContentEmbedded; // 본문 포함 여부
 
     @CreatedDate
     @Column(updatable = false)
@@ -41,7 +44,4 @@ public class FileMetadata {
         this.fileSize = fileSize;
     }
 
-    public String getShortUrlKey() {
-        return this.shortUrlKey;
-    }
 }

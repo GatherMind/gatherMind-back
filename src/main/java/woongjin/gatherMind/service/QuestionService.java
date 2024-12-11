@@ -2,8 +2,11 @@ package woongjin.gatherMind.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import woongjin.gatherMind.DTO.*;
 import woongjin.gatherMind.entity.*;
 import woongjin.gatherMind.exception.unauthorized.UnauthorizedActionException;
@@ -12,8 +15,11 @@ import woongjin.gatherMind.exception.notFound.QuestionNotFoundException;
 import woongjin.gatherMind.exception.notFound.StudyNotFoundException;
 import woongjin.gatherMind.repository.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +32,8 @@ public class QuestionService {
 
     private final CommonLookupService commonLookupService;
     private final FileService fileService;
+
+    private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
     /**
      * 질문 생성
@@ -40,8 +48,8 @@ public class QuestionService {
     @Transactional
     public Question createQuestionWithFile(QuestionCreateWithFileDTO questionDTO, String memberId, Long studyId) {
 
-        Member byMemberId = commonLookupService.findByMemberId(memberId);
-        Study study = commonLookupService.findStudyByStudyId(studyId);
+        commonLookupService.findByMemberId(memberId);
+        commonLookupService.findStudyByStudyId(studyId);
 
         StudyMember studyMember = commonLookupService.findByMemberIdAndStudyId(memberId, studyId);
 
@@ -52,7 +60,13 @@ public class QuestionService {
         question.setStudyMember(studyMember);
 
         Question savedQuestion = this.questionRepository.save(question);
+
+        // 파일(폼을 통해 입력) 매핑
         handleFileForQuestion(questionDTO, savedQuestion, memberId);
+
+        // 이미지 파일(에디터를 통해 입력) 매핑
+        List<String> fileKeys = extractFileKeysFromContent(questionDTO.getContent());
+        fileKeys.forEach(fileKey -> linkFileToQuestion(fileKey, savedQuestion));
 
         return savedQuestion;
     }
@@ -67,16 +81,26 @@ public class QuestionService {
     public QuestionWithFileUrlDTO getQuestionWithFileUrl(Long questionId) {
 
         Question question = findByQuestionId(questionId);
-        FileMetadataUrlDTO fileMetaDTO = fileMetadataRepository.findByEntityFileMapping_Question_QuestionId(questionId);
+        Optional<FileMetadataUrlDTO> fileMetaDTO = fileMetadataRepository.findNonEmbeddedFilesByQuestionId(questionId);
+//        Optional<FileMetadataUrlDTO> fileMetaDTO = fileMetadataRepository.findNonImageFilesByQuestionId(questionId);
 
         String fileName = "";
         String fullUrlByKey = "";
-        if (fileMetaDTO != null) {
-            fullUrlByKey = fileService.getFullUrlByKey(fileMetaDTO.getFileKey());
-            fileName = fileMetaDTO.getFileName();
+        Long fileMetaDataId = 0L;
+
+        if (fileMetaDTO.isPresent()) {
+            FileMetadataUrlDTO metadata = fileMetaDTO.get();
+            fullUrlByKey = fileService.getFullUrlByKey(metadata.getFileKey());
+            fileName = metadata.getFileName();
+            fileMetaDataId = metadata.getFileMetadataId();
         }
 
-        return new QuestionWithFileUrlDTO(question, fileName, fullUrlByKey);
+//        if (fileMetaDTO != null) {
+//            fullUrlByKey = fileService.getFullUrlByKey(fileMetaDTO.getFileKey());
+//            fileName = fileMetaDTO.getFileName();
+//        }
+
+        return new QuestionWithFileUrlDTO(question, fileName, fullUrlByKey, fileMetaDataId);
     }
 
     /**
@@ -92,15 +116,26 @@ public class QuestionService {
 
         Question originQuestion = checkQuestionOwnership(questionId, memberId);
 
-//        deleteExistingFilesForQuestion(questionId);
-
         originQuestion.setOption(questionDTO.getOption());
         originQuestion.setTitle(questionDTO.getTitle());
         originQuestion.setContent(questionDTO.getContent());
 
         Question savedQuestion = this.questionRepository.save(originQuestion);
 
+        List<String> updatedFileKeys = extractFileKeysFromContent(questionDTO.getContent());
+
+        boolean isFileEmpty = Optional.ofNullable(questionDTO.getFile())
+                .map(MultipartFile::isEmpty)
+                .orElse(true);
+
+        logger.info("isFileEmpty : {}", isFileEmpty);
+        deleteFilesNotInUpdatedKeys(questionId, updatedFileKeys, questionDTO.getFileMetaDataId(), isFileEmpty);
+
+        // 파일(폼을 통해 입력) 매핑
         handleFileForQuestion(questionDTO, savedQuestion, memberId);
+
+        // 이미지 파일(에디터를 통해 입력) 매핑
+        updatedFileKeys.forEach(fileKey -> linkFileToQuestion(fileKey, savedQuestion));
 
         return savedQuestion;
     }
@@ -117,7 +152,9 @@ public class QuestionService {
 
         Question question = checkQuestionOwnership(questionId, memberId);
 
-        deleteExistingFilesForQuestion(questionId);
+//        deleteExistingFilesForQuestion(questionId);
+
+        deleteAllFilesForQuestion(questionId);
 
         this.questionRepository.delete(question);
     }
@@ -133,6 +170,7 @@ public class QuestionService {
                 questionRepository.findTop3ByStudyMember_Member_MemberIdOrderByCreatedAtDesc(memberId);
         return top3ByStudyMemberMemberMemberIdOrderByCreatedAtDesc.stream().map(QuestionDTO::new).collect(Collectors.toList());
     }
+
 
     /**
      * 특정 회원이 작성한 질문 수 조회
@@ -184,27 +222,153 @@ public class QuestionService {
         Optional.ofNullable(questionDTO.getFile())
                 .filter(file -> !file.isEmpty())
                 .ifPresent(file -> {
-                    deleteExistingFilesForQuestion(question.getQuestionId());
                     EntityFileMapping entityFileMapping = new EntityFileMapping();
                     entityFileMapping.setQuestion(question);
                     entityFileMapping.setStudyMember(question.getStudyMember());
-                    fileService.handleFileUpload(file, memberId, entityFileMapping);
+                    Boolean isContentEmbedded = false;
+
+                    FileUploadResponseDTO responseDTO = fileService.handleFileUpload(file, memberId, isContentEmbedded);
+
+                    FileMetadata metadata = fileMetadataRepository.findByFileKey(responseDTO.getFileKey())
+                            .orElseThrow(() -> new RuntimeException("Metadata not found for fileKey: " + responseDTO.getFileKey()));
+                    entityFileMapping.setFileMetadata(metadata);
+                    entityFileMappingRepository.save(entityFileMapping);
                 });
     }
 
+
+//    private void handleFileForQuestion(QuestionCreateWithFileDTO questionDTO, Question question, String memberId) {
+//        Optional.ofNullable(questionDTO.getFile())
+//                .filter(file -> !file.isEmpty())
+//                .ifPresent(file -> {
+//                    deleteExistingFilesForQuestion(question.getQuestionId());
+//                    EntityFileMapping entityFileMapping = new EntityFileMapping();
+//                    entityFileMapping.setQuestion(question);
+//                    entityFileMapping.setStudyMember(question.getStudyMember());
+//                    fileService.handleFileUpload(file, memberId, entityFileMapping);
+//                });
+//    }
+
+//    /**
+//     * 질문과 관련된 기존 파일 삭제
+//     *
+//     * @param questionId 질문 ID
+//     */
+//    private void deleteExistingFilesForQuestion(Long questionId) {
+//        EntityFileMapping existingMapping = entityFileMappingRepository.findByQuestion_QuestionId(questionId);
+//
+//        if (existingMapping != null) {
+//            entityFileMappingRepository.delete(existingMapping);
+//            fileMetadataRepository.delete(existingMapping.getFileMetadata());
+//            fileService.deleteFileFromS3(existingMapping.getFileMetadata().getFileKey());
+//        }
+//
+//    }
+
     /**
-     * 질문과 관련된 기존 파일 삭제
+     * 기존 질문과 관련된 파일 중 업데이트된 본문에 포함되지 않은 파일을 삭제
+     *
+     * @param questionId  질문 ID
+     * @param newFileKeys 업데이트된 게시글 본문에 포함된 이미지 파일 키 목록
+     */
+    private void deleteFilesNotInUpdatedKeys(Long questionId, List<String> newFileKeys, Long fileMetaDataId, boolean isFileEmpty) {
+        Set<String> newFileKeySet = new HashSet<>(newFileKeys); // List를 Set으로 변환하여 검색 속도 최적화
+
+        // 삭제할 매핑 리스트 결정
+        List<EntityFileMapping> mappingsToDelete = entityFileMappingRepository
+                .findByQuestion_QuestionId(questionId)
+                .stream()
+                .filter(mapping -> {
+                    // isFileEmpty가 false인 경우, 모든 기존 매핑 삭제 대상
+                    if (!isFileEmpty) {
+                        return !newFileKeySet.contains(mapping.getFileMetadata().getFileKey());
+                    }
+                    // 그렇지 않은 경우, fileMetaDataId 제외 및 키 체크
+                    return !newFileKeySet.contains(mapping.getFileMetadata().getFileKey())
+                            && !mapping.getFileMetadata().getFileMetadataId().equals(fileMetaDataId);
+                })
+                .toList();
+
+        logger.info("mappingsToDelete : {}", mappingsToDelete);
+
+        // 매핑 삭제 처리
+        mappingsToDelete.forEach(this::deleteFileMapping);
+
+//        List<EntityFileMapping> existingMappings = entityFileMappingRepository.findByQuestion_QuestionId(questionId);
+//
+//        existingMappings.stream()
+//                .filter(mapping -> !newFileKeys.contains(mapping.getFileMetadata().getFileKey()))
+//                .forEach(mapping -> deleteFileMapping(mapping));
+    }
+
+    /**
+     * 질문과 관련된 파일 모두 삭제
      *
      * @param questionId 질문 ID
      */
-    private void deleteExistingFilesForQuestion(Long questionId) {
-        EntityFileMapping existingMapping = entityFileMappingRepository.findByQuestion_QuestionId(questionId);
+    private void deleteAllFilesForQuestion(Long questionId) {
+        List<EntityFileMapping> existingMappings = entityFileMappingRepository.findByQuestion_QuestionId(questionId);
+        existingMappings.forEach(this::deleteFileMapping);
+    }
 
-        if (existingMapping != null) {
-            entityFileMappingRepository.delete(existingMapping);
-            fileMetadataRepository.delete(existingMapping.getFileMetadata());
-            fileService.deleteFileFromS3(existingMapping.getFileMetadata().getFileKey());
+    /**
+     * 특정 파일 매핑과 관련된 S3 파일 및 매핑 데이터, 메타 데이터를 삭제
+     *
+     * @param mapping 삭제할 파일 매핑 데이터
+     */
+    private void deleteFileMapping(EntityFileMapping mapping) {
+        fileService.deleteFileFromS3(mapping.getFileMetadata().getFileKey());
+        entityFileMappingRepository.delete(mapping);
+        fileMetadataRepository.delete(mapping.getFileMetadata());
+    }
+
+    /**
+     * 게시글 내용에서 이미지 URL의 S3 키를 추출
+     *
+     * @param content 게시글 내용
+     * @return 추출된 S3 파일 키 목록
+     */
+    private List<String> extractFileKeysFromContent(String content) {
+        List<String> fileKeys = new ArrayList<>();
+        String regex = "src=['\"]https?://.+?/(.+?)['\"]"; // S3 URL에서 파일 키 추출
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+
+        while (matcher.find()) {
+            try {
+                String encodedKey = matcher.group(1);
+                String decodedKey = URLDecoder.decode(encodedKey, StandardCharsets.UTF_8.name());
+                fileKeys.add(decodedKey);
+            } catch (Exception e) {
+                logger.error("URL 디코딩 실패: " + matcher.group(1), e);
+            }
+        }
+        return fileKeys;
+    }
+
+    /**
+     * 주어진 S3 파일 키와 질문을 매핑
+     *
+     * @param fileKey  이미지의 S3 파일 키
+     * @param question 매핑할 질문 객체
+     */
+    @Transactional
+    public void linkFileToQuestion(String fileKey, Question question) {
+        // 파일 메타데이터 조회
+        FileMetadata metadata = fileMetadataRepository.findByFileKey(fileKey)
+                .orElseThrow(() -> new RuntimeException("Metadata not found for fileKey: " + fileKey));
+
+        // 이미 매핑된 경우 중복 생성 방지
+        EntityFileMapping alreadyFileMapping = entityFileMappingRepository.findByFileMetadata_FileMetadataId(metadata.getFileMetadataId());
+        if (alreadyFileMapping != null) {
+            return; // 중복 방지
         }
 
+        // 파일 매핑 정보 저장
+        EntityFileMapping fileMapping = new EntityFileMapping();
+        fileMapping.setFileMetadata(metadata);
+        fileMapping.setQuestion(question);
+        fileMapping.setStudyMember(question.getStudyMember());
+        entityFileMappingRepository.save(fileMapping);
     }
 }

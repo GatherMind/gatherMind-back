@@ -55,4 +55,14 @@ public class StudyMemberController {
         studyMemberService.resignStudyMember(memberId, dto);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(
+            summary = "스터디 탈퇴"
+    )
+    @DeleteMapping("/{studyId}")
+    public ResponseEntity<StudyMemberDTO> withdrawStudyMember(@CurrentMemberId String memberId,
+                                                              @PathVariable Long studyId) {
+        studyMemberService.withdrawStudyMember(memberId, studyId);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -19,8 +19,6 @@ public class JwtTokenProvider {
     private final long expirationTime;
 
 
-
-
     // 생성자 주입: SecretKey와 만료 시간 설정
     public JwtTokenProvider(@Value("${jwt.expiration}") long expirationTime) {
         this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
@@ -88,7 +86,7 @@ public class JwtTokenProvider {
 // ExpiredJwtException: JWT가 만료되었을 때.
 // (SignatureException): JWT 서명이 유효하지 않을 때. (이제 JwtException으로 대체)
     // 토큰 유효성 검증
-    public void validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(secretKey)
@@ -99,6 +97,7 @@ public class JwtTokenProvider {
         }  catch (JwtException | IllegalArgumentException e) {
             throw new InvalidTokenException("Invalid token");
         }
+        return false;
     }
 
     // HTTP 요청 헤더에서 Bearer 토큰 추출

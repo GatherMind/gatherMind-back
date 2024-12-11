@@ -221,6 +221,7 @@ public class StudyService {
                         study.getTitle(),
                         study.getDescription(),
                         study.getStatus(),
+                        study.getCategory(),
                         study.getCreatedAt()
                 ))
                 .collect(Collectors.toList());
