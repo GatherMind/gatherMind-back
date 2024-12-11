@@ -28,4 +28,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     Optional<Member> findByNickname(String nickname);
 
     Optional<String> findProfileImageUrlByMemberId(@Param("memberId") String memberId);
+
+    Optional<Member> findByEmail(String email);
 }

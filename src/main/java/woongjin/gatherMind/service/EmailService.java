@@ -21,7 +21,6 @@ public class EmailService {
 
     private final EmailVerificationTokenRepository tokenRepository;
     private final MemberRepository memberRepository;
-    @Autowired
     private final JavaMailSender mailSender;
 
     public void  createVerificationToken(Member member, String token) {
@@ -68,7 +67,7 @@ public class EmailService {
             throw new IllegalStateException("No member associated with this token");
         }
 
-        member.setEmailVerified(true);
+//        member.setEmailVerified(true);
         memberRepository.save(member);
         return true;
     }

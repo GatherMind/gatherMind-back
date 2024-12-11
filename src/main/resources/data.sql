@@ -1,19 +1,19 @@
-INSERT INTO member (member_id, nickname, password, created_at, email, profile_image, is_email_verified) VALUES
-('member1', 'Alpha', 'Password123', CURRENT_TIMESTAMP, 'user1@example.com', '/api/files/default-profile', false),
-('member2', 'Beta', 'Password456', CURRENT_TIMESTAMP, 'user2@example.com', '/api/files/default-profile', false),
-('member3', 'Gamma', 'Password789', CURRENT_TIMESTAMP, 'user3@example.com', '/api/files/default-profile', false),
-('member4', 'Delta', 'Password101', CURRENT_TIMESTAMP, 'user4@example.com', '/api/files/default-profile', false),
-('member5', 'Epsilon', 'Password202', CURRENT_TIMESTAMP, 'user5@example.com', '/api/files/default-profile', false),
-('member6', 'Zeta', 'Password303', CURRENT_TIMESTAMP, 'user6@example.com', '/api/files/default-profile', false),
-('member7', 'Eta', 'Password404', CURRENT_TIMESTAMP, 'user7@example.com', '/api/files/default-profile', false),
-('member8', 'Theta', 'Password505', CURRENT_TIMESTAMP, 'user8@example.com', '/api/files/default-profile', false),
-('member9', 'Iota', 'Password606', CURRENT_TIMESTAMP, 'user9@example.com', '/api/files/default-profile', false),
-('member10', 'Kappa', 'Password707', CURRENT_TIMESTAMP, 'user10@example.com', '/api/files/default-profile', false),
-('member11', 'Lambda', 'Password808', CURRENT_TIMESTAMP, 'user11@example.com', '/api/files/default-profile', false),
-('member12', 'Mu', 'Password909', CURRENT_TIMESTAMP, 'user12@example.com', '/api/files/default-profile', false),
-('member13', 'Nu', 'Password010', CURRENT_TIMESTAMP, 'user13@example.com', '/api/files/default-profile', false),
-('member14', 'Xi', 'Password111', CURRENT_TIMESTAMP, 'user14@example.com', '/api/files/default-profile', false),
-('member15', 'Omicron', 'Password222', CURRENT_TIMESTAMP, 'user15@example.com', '/api/files/default-profile', false);
+INSERT INTO member (member_id, nickname, password, created_at, email, profile_image) VALUES
+('member1', 'Alpha', 'Password123', CURRENT_TIMESTAMP, 'user1@example.com', '/api/files/default-profile'),
+('member2', 'Beta', 'Password456', CURRENT_TIMESTAMP, 'user2@example.com', '/api/files/default-profile'),
+('member3', 'Gamma', 'Password789', CURRENT_TIMESTAMP, 'user3@example.com', '/api/files/default-profile'),
+('member4', 'Delta', 'Password101', CURRENT_TIMESTAMP, 'user4@example.com', '/api/files/default-profile'),
+('member5', 'Epsilon', 'Password202', CURRENT_TIMESTAMP, 'user5@example.com', '/api/files/default-profile'),
+('member6', 'Zeta', 'Password303', CURRENT_TIMESTAMP, 'user6@example.com', '/api/files/default-profile'),
+('member7', 'Eta', 'Password404', CURRENT_TIMESTAMP, 'user7@example.com', '/api/files/default-profile'),
+('member8', 'Theta', 'Password505', CURRENT_TIMESTAMP, 'user8@example.com', '/api/files/default-profile'),
+('member9', 'Iota', 'Password606', CURRENT_TIMESTAMP, 'user9@example.com', '/api/files/default-profile'),
+('member10', 'Kappa', 'Password707', CURRENT_TIMESTAMP, 'user10@example.com', '/api/files/default-profile'),
+('member11', 'Lambda', 'Password808', CURRENT_TIMESTAMP, 'user11@example.com', '/api/files/default-profile'),
+('member12', 'Mu', 'Password909', CURRENT_TIMESTAMP, 'user12@example.com', '/api/files/default-profile'),
+('member13', 'Nu', 'Password010', CURRENT_TIMESTAMP, 'user13@example.com', '/api/files/default-profile'),
+('member14', 'Xi', 'Password111', CURRENT_TIMESTAMP, 'user14@example.com', '/api/files/default-profile'),
+('member15', 'Omicron', 'Password222', CURRENT_TIMESTAMP, 'user15@example.com', '/api/files/default-profile');
 
 
 INSERT INTO study (study_id, title, description, status, created_at, category) VALUES
