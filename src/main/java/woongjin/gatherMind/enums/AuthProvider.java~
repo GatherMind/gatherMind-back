@@ -1,9 +1,0 @@
-package woongjin.gatherMind.enums;
-
-public enum AuthProvider {
-    LOCAL,   // 일반 회원가입
-    GOOGLE,  // 구글 OAuth
-    GITHUB,  // 깃허브 OAuth (필요 시 추가)
-    KAKAO,   // 카카오 OAuth
-    NAVER    // 네이버 OAuth
-}

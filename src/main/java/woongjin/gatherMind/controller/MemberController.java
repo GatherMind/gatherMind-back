@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,6 @@ public class MemberController {
     private final UniqueMemberIdValidator uniqueMemberIdValidator;
     private final UniqueEmailValidator uniqueEmailValidator;
     private final CommonLookupService commonLookupService;
-    private final PasswordEncoder passwordEncoder;
 
 
     /**
@@ -76,27 +76,22 @@ public class MemberController {
     @PutMapping("/update")
     public ResponseEntity<String> updateMemberInfo(
             HttpServletRequest request,
-            @RequestBody Map<String, String> requestBody) {
-        try {
-            // JWT에서 memberId 추출
-            String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+//            @RequestBody Map<String, String> requestBody,
+            @RequestBody UpdateProfileDTO dto)
+    {
 
-            // 요청에서 닉네임과 비밀번호 추출
-            String newNickname = requestBody.get("nickname");
-            String newPassword = requestBody.get("password");
-
-            // 서비스 메서드 호출로 수정 진행
-            String responseMessage = memberService.updateMemberInfo(memberId, newNickname, newPassword);
-
-            // 성공 메시지 반환
-            return ResponseEntity.ok(responseMessage);
-        } catch (InvalidNicknameException | InvalidPasswordException e) {
-            // 유효하지 않은 닉네임 또는 비밀번호 예외 처리
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            // 기타 예외 처리
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 정보 수정 중 오류가 발생했습니다.");
+        if (dto.isEmpty()) {
+            return ResponseEntity.badRequest().body("At least one field (nickname or password) must be provided");
         }
+
+        // JWT에서 memberId 추출
+        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+
+        // 서비스 메서드 호출로 수정 진행
+        String responseMessage = memberService.updateMemberInfo(memberId, dto.getNickname(), dto.getPassword());
+
+        // 성공 메시지 반환
+        return ResponseEntity.ok(responseMessage);
     }
 
     /**
@@ -217,10 +212,8 @@ public class MemberController {
      */
     @Operation(summary = "이메일 중복 확인", description = "이메일 중복 여부를 확인합니다.")
     @PostMapping("/check-email")
-    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestBody Map<String, String> request) {
-        String email = request.get("email");
-//        boolean isUnique = memberService.isEmailUnique(email);
-        return ResponseEntity.ok(Collections.singletonMap("isUnique", uniqueEmailValidator.isValid(email)));
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@Valid @RequestBody EmailCheckDTO emailCheckDTO) {
+        return ResponseEntity.ok(Collections.singletonMap("isUnique", uniqueEmailValidator.isValid(emailCheckDTO.getEmail())));
     }
 
     /**
@@ -228,10 +221,8 @@ public class MemberController {
      */
     @Operation(summary = "닉네임 중복 확인", description = "닉네임 중복 여부를 확인합니다.")
     @PostMapping("/check-nickname")
-    public ResponseEntity<Map<String, Boolean>> checkNickname(@RequestBody Map<String, String> request) {
-        String nickname = request.get("nickname");
-//        boolean isUnique = memberService.isNicknameUnique(nickname);
-        return ResponseEntity.ok(Collections.singletonMap("isUnique", uniqueNicknameValidator.isValid(nickname)));
+    public ResponseEntity<Map<String, Boolean>> checkNickname(@Valid @RequestBody NickNameCheckDTO nickNameCheckDTO) {
+        return ResponseEntity.ok(Collections.singletonMap("isUnique", uniqueNicknameValidator.isValid(nickNameCheckDTO.getNickname())));
     }
 
 
@@ -240,9 +231,7 @@ public class MemberController {
      */
     @Operation(summary = "아이디 중복 확인", description = "아이디 중복 여부를 확인합니다.")
     @PostMapping("/check-memberId")
-    public ResponseEntity<Map<String, Boolean>> checkMemberId(@RequestBody Map<String, String> request) {
-        String memberId = request.get("memberId");
-//        boolean isUnique = memberService.isMemberIdUnique(memberId);
-        return ResponseEntity.ok(Collections.singletonMap("isUnique", uniqueMemberIdValidator.isValid(memberId)));
+    public ResponseEntity<Map<String, Boolean>> checkMemberId(@Valid @RequestBody MemberIdCheckDTO memberIdCheckDTO) {
+        return ResponseEntity.ok(Collections.singletonMap("isUnique", uniqueMemberIdValidator.isValid(memberIdCheckDTO.getMemberId())));
     }
 }

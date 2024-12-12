@@ -2,6 +2,7 @@ package woongjin.gatherMind.validation;
 
 
 import woongjin.gatherMind.DTO.MemberDTO;
+import woongjin.gatherMind.DTO.RegisterDTO;
 import woongjin.gatherMind.constants.ErrorMessages;
 import woongjin.gatherMind.exception.conflict.DuplicateEmailException;
 import woongjin.gatherMind.exception.conflict.DuplicateMemberIdException;
@@ -10,7 +11,7 @@ import woongjin.gatherMind.repository.MemberRepository;
 
 public class UniqueFieldValidator {
 
-    public static void validateUniqueFields(MemberDTO memberDTO, MemberRepository memberRepository) {
+    public static void validateUniqueFields(RegisterDTO memberDTO, MemberRepository memberRepository) {
 
         if (memberRepository.existsByMemberId(memberDTO.getMemberId())) {
             throw new DuplicateMemberIdException(ErrorMessages.DUPLICATE_MEMBER_ID);

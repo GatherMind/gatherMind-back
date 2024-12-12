@@ -2,7 +2,6 @@ package woongjin.gatherMind.DTO;
 
 import lombok.*;
 import woongjin.gatherMind.entity.Study;
-import woongjin.gatherMind.entity.StudyMember;
 import woongjin.gatherMind.enums.StudyCategory;
 import woongjin.gatherMind.enums.StudyStatus;
 

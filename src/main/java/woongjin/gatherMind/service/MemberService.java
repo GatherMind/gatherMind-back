@@ -3,10 +3,13 @@ package woongjin.gatherMind.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import woongjin.gatherMind.DTO.*;
 
 import woongjin.gatherMind.config.JwtTokenProvider;
+import woongjin.gatherMind.enums.CustomAuthProvider;
 import woongjin.gatherMind.enums.CustomAuthProvider;
 import woongjin.gatherMind.exception.conflict.DuplicateEmailException;
 import woongjin.gatherMind.exception.conflict.DuplicateMemberIdException;
@@ -55,6 +58,8 @@ public class MemberService {
 //    private static final String DEFAULT_PROFILE_IMAGE_URL = "https://yourdomain.com/images/default-profile.png";
     private static final String DEFAULT_PROFILE_IMAGE_URL = "api/files/default-profile";
 
+    private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
+
 
     /**
      * 회원 정보 및 역할을 조회합니다.
@@ -72,22 +77,21 @@ public class MemberService {
     /**
      * 회원가입 처리
      *
-     * @param memberDTO 회원가입 정보가 담긴 DTO
+     * @param registerDTO 회원가입 정보가 담긴 DTO
      * @throws DuplicateMemberIdException 이미 사용 중인 ID일 경우
      * @throws DuplicateEmailException    이미 사용 중인 이메일일 경우
      * @throws DuplicateNicknameException 이미 사용 중인 닉네임일 경우
      */
     @Transactional
-    public Member signup(MemberDTO memberDTO) {
-        validateUniqueFields(memberDTO, memberRepository);
+    public Member signup(RegisterDTO registerDTO) {
+        validateUniqueFields(registerDTO, memberRepository);
 
         Member member = new Member();
-        member.setMemberId(memberDTO.getMemberId());
-        member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
-        member.setEmail(memberDTO.getEmail());
-        member.setNickname(memberDTO.getNickname());
+        member.setMemberId(registerDTO.getMemberId());
+        member.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+        member.setEmail(registerDTO.getEmail());
+        member.setNickname(registerDTO.getNickname());
         member.setOauthProvider(CustomAuthProvider.LOCAL);
-        member.setCreatedAt(LocalDateTime.now());
         member.setProfileImage(DEFAULT_PROFILE_IMAGE_URL);
 
         return memberRepository.save(member);
@@ -110,9 +114,10 @@ public class MemberService {
         return jwtTokenProvider.createToken(loginDTO.getMemberId());
     }
 
-    public String PasswordVerify(PasswordVerifyDTO passwordVerifyDTO) {
 
-        Member member = commonLookupService.findByMemberId(passwordVerifyDTO.getMemberId());
+    public String PasswordVerify(String memberId, PasswordVerifyDTO passwordVerifyDTO) {
+
+        Member member = commonLookupService.findByMemberId(memberId);
         if (!passwordEncoder.matches(passwordVerifyDTO.getPassword(), member.getPassword())) {
             throw new InvalidPasswordException("비밀번호가 잘못되었습니다.");
         }
@@ -156,7 +161,6 @@ public class MemberService {
     @Transactional
     public String updateMemberInfo(String memberId, String newNickname, String newPassword) {
         Member member = commonLookupService.findByMemberId(memberId);
-        System.out.println("DB에서 찾은 회원 정보: " + member);
 
         List<String> successMessages = new ArrayList<>();
 

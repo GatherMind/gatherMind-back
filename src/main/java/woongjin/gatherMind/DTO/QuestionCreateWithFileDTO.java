@@ -15,6 +15,7 @@ import java.util.List;
 public class QuestionCreateWithFileDTO {
     private Long questionId;
     private Long fileMetaDataId;
+    @NotBlank
     private QuestionOption option;
     @NotBlank
     private String title;
