@@ -19,4 +19,5 @@ public class ErrorMessages {
     public static final String STATUS_CODE_NOT_FOUND = "Status code not found";
     public static final String STUDY_STATUS_CODE_NOT_FOUND = "Study Status code not found";
     public static final String QUESTION_OPTION_CODE_NOT_FOUND = "Question option code not found";
+    public static final Object AUTH_PROVIDER_NOT_FOUND = "Auth provider code not found";
 }

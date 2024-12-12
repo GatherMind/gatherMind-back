@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import woongjin.gatherMind.DTO.*;
 
 import woongjin.gatherMind.config.JwtTokenProvider;
+import woongjin.gatherMind.enums.CustomAuthProvider;
+import woongjin.gatherMind.enums.CustomAuthProvider;
 import woongjin.gatherMind.exception.conflict.DuplicateEmailException;
 import woongjin.gatherMind.exception.conflict.DuplicateMemberIdException;
 import woongjin.gatherMind.exception.conflict.DuplicateNicknameException;
@@ -30,6 +32,7 @@ import woongjin.gatherMind.validation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 
@@ -88,7 +91,7 @@ public class MemberService {
         member.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         member.setEmail(registerDTO.getEmail());
         member.setNickname(registerDTO.getNickname());
-        member.setCreatedAt(LocalDateTime.now());
+        member.setOauthProvider(CustomAuthProvider.LOCAL);
         member.setProfileImage(DEFAULT_PROFILE_IMAGE_URL);
 
         return memberRepository.save(member);
@@ -199,18 +202,6 @@ public class MemberService {
                 .stream().map(AnswerDTO::new).toList();
     }
 
-//    /**
-//     * 회원 ID로 회원체크
-//     *
-//     * @param memberId 조회할 회원 ID
-//     * @throws MemberNotFoundException 회원 ID가 존재하지 않을 경우
-//     */
-//    public void checkMemberExists(String memberId) {
-//        if (!memberRepository.existsById(memberId)) {
-//            throw new MemberNotFoundException(memberId);
-//        }
-//    }
-
     public String getNicknameById(String memberId) {
         return memberRepository.findById(memberId)
                 .map(Member::getNickname)
@@ -251,6 +242,24 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new UsernameNotFoundException("회원 ID를 찾을 수 없습니다: " + memberId));
         return new MemberDetails(member);
+    }
+
+    public Member findByEmail(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        return member.orElse(null); // 존재하지 않으면 null 반환
+    }
+
+    public void signupFromOAuth2(Member member) {
+        if (memberRepository.existsByMemberId(member.getMemberId())) {
+            throw new IllegalArgumentException("이미 존재하는 사용자입니다.");
+        }
+
+        memberRepository.save(member);
+    }
+
+    public Member findByMemberId(String memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with memberId: " + memberId));
     }
 
 }

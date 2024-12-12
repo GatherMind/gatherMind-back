@@ -5,10 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import woongjin.gatherMind.DTO.MemberAndStatusRoleDTO;
 import woongjin.gatherMind.entity.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
+import woongjin.gatherMind.enums.CustomAuthProvider;
 
 
-import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
@@ -27,5 +26,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     Optional<Member> findByNickname(String nickname);
 
-    Optional<String> findProfileImageUrlByMemberId(@Param("memberId") String memberId);
+
+    Optional<Member> findByEmail(String email);
+
+    Optional<Member> findByOauthIdAndOauthProvider(String oauthId, CustomAuthProvider oauthProvider);
+
+
 }

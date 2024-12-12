@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import woongjin.gatherMind.enums.CustomAuthProvider;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,13 +25,24 @@ public class Member {
 
     @Column(unique = true)
     private String nickname;
+
     private String email;
+
     private String password;
 
     private boolean isEmailVerified = false; // 초기값 false
 
     @Column(nullable = false)
     private String profileImage = "/api/files/default-profile";
+
+    private Boolean isDeleted = false;
+
+    @Column(unique = true)
+    private String oauthId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CustomAuthProvider oauthProvider;
 
     @CreatedDate
     @Column(updatable = false)

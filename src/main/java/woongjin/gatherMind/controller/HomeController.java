@@ -1,5 +1,4 @@
 package woongjin.gatherMind.controller;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +7,7 @@ public class HomeController {
 
 
     @RequestMapping(value = {"/", "/login", "/signup", "/mypage", "/mypage/act",
-            "/editprofile", "/goodbye", "/serious"})
+            "/editprofile", "/goodbye", "/serious", "/login-success"})
     public String index() {
         return "forward:/index.html";
     }

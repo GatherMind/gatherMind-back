@@ -40,3 +40,5 @@ logs/
 *.log
 
 src/resources/static/
+
+src/main/resources/keystore.p12

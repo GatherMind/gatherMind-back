@@ -59,15 +59,6 @@ public class AuthController {
         return ResponseEntity.ok(memberService.PasswordVerify(memberId, passwordVerifyDTO));
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String token = jwtTokenProvider.createToken(authentication.getName());
-//        return ResponseEntity.ok(new JwtResponse(token));
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDTO dto) {
 
