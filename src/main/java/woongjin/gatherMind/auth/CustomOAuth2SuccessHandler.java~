@@ -6,26 +6,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.service.MemberService;
 import woongjin.gatherMind.entity.Member;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
-    private final ObjectMapper objectMapper; // JSON 변환용
 
     public CustomOAuth2SuccessHandler(JwtTokenProvider jwtTokenProvider, MemberService memberService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.memberService = memberService;
-        this.objectMapper = new ObjectMapper(); // ObjectMapper 생성
     }
 
     @Override
@@ -47,12 +42,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         // JWT 토큰 생성
         String token = jwtTokenProvider.createToken(email);
 
-        // JSON 형태로 토큰 반환
-        Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("token", token);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(responseBody));
+        // React 애플리케이션으로 리다이렉트
+        String redirectUrl = "http://localhost:3000/oauth2/redirect?token=" + token;
+        response.sendRedirect(redirectUrl);
     }
 }

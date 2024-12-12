@@ -57,7 +57,7 @@ spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/o
 
 # GitHub login setting
 spring.security.oauth2.client.registration.github.client-id=Ov23liuwK9a8Gut7ph0X
-spring.security.oauth2.client.registration.github.client-secret=56b01c9dce12f8e9f769ae7a6cc7974a920992e9
+spring.security.oauth2.client.registration.github.client-secret=your-github-client-secret
 spring.security.oauth2.client.registration.github.scope=user:email
 spring.security.oauth2.client.registration.github.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
 

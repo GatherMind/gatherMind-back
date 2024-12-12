@@ -42,8 +42,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         // JWT 토큰 생성
         String token = jwtTokenProvider.createToken(email);
 
-        // React 애플리케이션으로 리다이렉트
-        String redirectUrl = "http://localhost:3000/oauth2/redirect?token=" + token;
+        // React로 리다이렉트, 토큰을 쿼리 파라미터로 전달
+        String redirectUrl = "/login-success?token=" + token; // React의 /login-success 경로
         response.sendRedirect(redirectUrl);
     }
 }
