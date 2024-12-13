@@ -1,0 +1,40 @@
+package woongjin.gatherMind.auth;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import woongjin.gatherMind.config.JwtTokenProvider;
+import woongjin.gatherMind.entity.Member;
+import woongjin.gatherMind.service.MemberService;
+
+import java.io.IOException;
+
+@Component
+@RequestMapping("/oauth-success")
+public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public OAuth2SuccessHandler(JwtTokenProvider jwtTokenProvider, MemberService memberService) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        String email = oAuth2User.getAttribute("email");
+
+        // JWT 토큰 생성
+        String token = jwtTokenProvider.createToken(email);
+
+        // React 페이지로 리다이렉트 (index.html 내부에서 처리)
+        response.sendRedirect("/oauth-success?token=" + token);
+    }
+
+
+}
+

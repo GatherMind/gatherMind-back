@@ -1,5 +1,6 @@
 package woongjin.gatherMind.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import woongjin.gatherMind.auth.CustomOAuth2SuccessHandler;
 import woongjin.gatherMind.auth.JwtAuthenticationFilter;
 import woongjin.gatherMind.service.CustomOAuth2UserService;
 
@@ -18,18 +18,17 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomOAuth2UserService customOAuth2UserService,
-                          CustomOAuth2SuccessHandler customOAuth2SuccessHandler) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomOAuth2UserService customOAuth2UserService) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customOAuth2UserService = customOAuth2UserService;
-        this.customOAuth2SuccessHandler = customOAuth2SuccessHandler;
     }
 
     @Bean
@@ -41,8 +40,6 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-//                                "/**",
-//                                "/api/member/**",
                                 "/api/auth/**",
                                 "/api/member/check-email",
                                 "/api/member/check-nickname",
@@ -51,23 +48,26 @@ public class SecurityConfig {
                                 "/api/study-categories/**",
                                 "/h2-console/**",
                                 "/oauth2/**",
-                                "/login"
+                                "/login",
+                                "/",
+                                "/oauth-success", // 리다이렉트 경로 추가
+                                "/index.html",
+                                "/static/**"
                         ).permitAll()
                         .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login") // 커스텀 로그인 페이지
-                        .authorizationEndpoint(auth -> auth
-                                .baseUri("/oauth2/authorization")) // OAuth2 인증 엔드포인트
-                        .successHandler(customOAuth2SuccessHandler) // 성공 핸들러 사용
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)) // 사용자 정보를 로드하는 서비스
                 )
                 .headers(headers -> headers
                         .defaultsDisabled() // 기본 헤더 설정을 비활성화하고 필요한 헤더만 추가
                         .frameOptions(frameOptions -> frameOptions.sameOrigin()) // 같은 출처의 frame 허용
                 )
+                .oauth2Login(oauth2 -> oauth2
+                        .defaultSuccessUrl("/oauth2/success", true) // 로그인 성공 후 리다이렉트 경로
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService) // 사용자 정보 서비스 설정
+                        )
+                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                                .formLogin(form -> form.disable()) // 기본 로그인 페이지 비활성화
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())); // 새로운 CORS 설정 방식;
 
         return http.build();

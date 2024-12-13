@@ -1,33 +1,21 @@
 package woongjin.gatherMind.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
-import woongjin.gatherMind.config.OAuthConfig;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.Collections;
+import java.util.Map;
+
+@RestController
 public class OAuth2Controller {
 
-    @Autowired
-    private OAuthConfig oAuthConfig;
+    @GetMapping("/oauth-success")
+    public Map<String, Object> oauthSuccess(OAuth2User oAuth2User) {
+        if (oAuth2User == null) {
+            return Collections.singletonMap("error", "OAuth2User is null");
+        }
 
-    @GetMapping("/google/login")
-    public String googleLogin() {
-
-    }
-
-    @GetMapping("/github/login")
-    public String githubLogin() {
-
-    }
-
-    @GetMapping("/kakao/login")
-    public String kakaoLogin() {
-
-    }
-
-    @GetMapping("/naver/login")
-    public String naverLogin() {
-
+        return oAuth2User.getAttributes();
     }
 }

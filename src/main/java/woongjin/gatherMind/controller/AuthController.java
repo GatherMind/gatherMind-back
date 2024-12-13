@@ -19,6 +19,7 @@ import woongjin.gatherMind.service.EmailService;
 import woongjin.gatherMind.service.MemberService;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController

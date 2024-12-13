@@ -37,7 +37,7 @@ public class Member {
 
     private Boolean isDeleted = false;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     private String oauthId;
 
     @Enumerated(EnumType.STRING)

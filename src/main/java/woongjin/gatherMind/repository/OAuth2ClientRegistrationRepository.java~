@@ -1,0 +1,4 @@
+package woongjin.gatherMind.repository;
+
+public class OAuth2ClientRegistrationRepository {
+}

@@ -32,13 +32,17 @@ public class MemberDTO {
     @Size(min = 8, max = 255, message = "비밀번호는 8자 이상 255자 이하로 입력해야 합니다.")
     private String password;
 
-    // 모든 필드를 포함하는 생성자
+    // OAuth2 사용자 필드 추가
+    private String oauthId;
+    private String oauthProvider;
 
+    // 모든 필드를 포함하는 생성자
     public MemberDTO(String memberId, String nickname, String email, String profileImage, LocalDateTime createdAt) {
         this.memberId = memberId;
         this.nickname = nickname;
         this.email = email;
         this.profileImage = profileImage;
+        this.createdAt = createdAt;
     }
 
     // Member 엔티티를 매개변수로 받는 생성자 (password는 포함하지 않음)
@@ -48,5 +52,7 @@ public class MemberDTO {
         this.email = member.getEmail();
         this.profileImage = member.getProfileImage();
         this.createdAt = member.getCreatedAt();
+        this.oauthId = member.getOauthId();
+        this.oauthProvider = member.getOauthProvider() != null ? member.getOauthProvider().name() : null;
     }
 }
