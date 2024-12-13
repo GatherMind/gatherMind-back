@@ -12,7 +12,7 @@ import woongjin.gatherMind.constants.ProgressConstants;
 import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.entity.Study;
 import woongjin.gatherMind.entity.StudyMember;
-import woongjin.gatherMind.enums.Role;
+import woongjin.gatherMind.enums.StudyRole;
 import woongjin.gatherMind.enums.MemberStatus;
 import woongjin.gatherMind.exception.unauthorized.UnauthorizedActionException;
 import woongjin.gatherMind.exception.notFound.MemberNotFoundException;
@@ -57,7 +57,7 @@ public class StudyService {
         Study savedStudy = studyRepository.save(study);
 
         StudyMember studyMember = createStudyMember(savedStudy, member,
-                Role.ADMIN, MemberStatus.APPROVED, ProgressConstants.NOT_STARTED);
+                StudyRole.ADMIN, MemberStatus.APPROVED, ProgressConstants.NOT_STARTED);
         studyMemberRepository.save(studyMember);
 
         return savedStudy;

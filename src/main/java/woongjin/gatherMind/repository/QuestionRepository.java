@@ -3,6 +3,7 @@ package woongjin.gatherMind.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import woongjin.gatherMind.DTO.AdminGetQuestionDTO;
 import woongjin.gatherMind.DTO.QuestionWithoutAnswerDTO;
 import woongjin.gatherMind.entity.Question;
 
@@ -28,5 +29,10 @@ public interface QuestionRepository  extends JpaRepository<Question, Long> {
 
     @Query("SELECT COUNT(q) FROM Question q WHERE q.studyMember.member.memberId = :memberId")
     long countByMemberId(@Param("memberId") String memberId);
+
+    @Query("SELECT new woongjin.gatherMind.DTO.AdminGetQuestionDTO( q.questionId, q.content, q.createdAt, q.title, sm.member.memberId ) " +
+            "FROM Question q JOIN q.studyMember sm " +
+            "ORDER BY q.createdAt DESC ")
+    List<AdminGetQuestionDTO> getAllQuestion();
 }
 

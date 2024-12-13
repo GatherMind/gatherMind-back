@@ -3,15 +3,9 @@ package woongjin.gatherMind.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woongjin.gatherMind.entity.Member;
-import woongjin.gatherMind.entity.Study;
-import woongjin.gatherMind.entity.StudyMember;
-import woongjin.gatherMind.exception.notFound.MemberNotFoundException;
-import woongjin.gatherMind.exception.notFound.StudyMemberNotFoundException;
-import woongjin.gatherMind.exception.notFound.StudyNotFoundException;
-import woongjin.gatherMind.repository.MemberRepository;
-import woongjin.gatherMind.repository.StudyMemberRepository;
-import woongjin.gatherMind.repository.StudyRepository;
+import woongjin.gatherMind.entity.*;
+import woongjin.gatherMind.exception.notFound.*;
+import woongjin.gatherMind.repository.*;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +14,8 @@ public class CommonLookupService {
     private final MemberRepository memberRepository;
     private final StudyRepository studyRepository;
     private final StudyMemberRepository studyMemberRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
 
     /**
@@ -56,6 +52,32 @@ public class CommonLookupService {
     public Study findStudyByStudyId(Long studyId) {
         return studyRepository.findById(studyId)
                 .orElseThrow(() -> new StudyNotFoundException(studyId));
+    }
+
+    /**
+     * 질문 ID로 질문 조회
+     *
+     * @param questionId 질문 ID
+     * @return 질문
+     * @throws QuestionNotFoundException 질문 ID가 존재하지 않을 경우
+     */
+    @Transactional(readOnly = true)
+    public Question findQuestionByQuestionId(Long questionId) {
+        return questionRepository.findById(questionId)
+                .orElseThrow(() -> new QuestionNotFoundException(questionId));
+    }
+
+    /**
+     * 답변 ID로 질문 조회
+     *
+     * @param answerId 답변 ID
+     * @return 답변
+     * @throws AnswerNotFoundException 질문 ID가 존재하지 않을 경우
+     */
+    @Transactional(readOnly = true)
+    public Answer findAnswerByAnswerId(Long answerId) {
+        return answerRepository.findById(answerId)
+                .orElseThrow(() -> new AnswerNotFoundException(answerId));
     }
 
     /**

@@ -1,9 +1,11 @@
 package woongjin.gatherMind.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import woongjin.gatherMind.exception.conflict.ConflictException;
@@ -13,6 +15,9 @@ import woongjin.gatherMind.exception.notFound.*;
 import woongjin.gatherMind.exception.studyMember.StudyMemberAlreadyExistsException;
 import woongjin.gatherMind.exception.studyMember.StudyMemberException;
 import woongjin.gatherMind.exception.unauthorized.UnauthorizedException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -66,6 +71,26 @@ public class GlobalExceptionHandler {
         logger.warn("StudyMemberException occurred: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return ResponseEntity.badRequest().body(errors); // 400 Bad Request 반환
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(violation ->
+                errors.put(violation.getPropertyPath().toString(), violation.getMessage())
+        );
+        return ResponseEntity.badRequest().body(errors); // 400 Bad Request 반환
+    }
+
 
     // 모든 예외 처리
     @ExceptionHandler(Exception.class)

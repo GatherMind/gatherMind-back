@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import woongjin.gatherMind.enums.MemberStatus;
-import woongjin.gatherMind.enums.Role;
+import woongjin.gatherMind.enums.StudyRole;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +14,7 @@ import woongjin.gatherMind.enums.Role;
 public class MemberAndStatusRoleDTO {
     private String memberId;
     private String nickname;
-    private Role role;
+    private StudyRole role;
     private MemberStatus status;
     private Long studyMemberId;
 }

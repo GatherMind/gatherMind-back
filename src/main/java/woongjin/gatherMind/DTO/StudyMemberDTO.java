@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import woongjin.gatherMind.entity.StudyMember;
 import woongjin.gatherMind.enums.MemberStatus;
-import woongjin.gatherMind.enums.Role;
+import woongjin.gatherMind.enums.StudyRole;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ public class StudyMemberDTO {
     private Long studyMemberId;
     private String memberId;
     private Long studyId;
-    private Role role;
+    private StudyRole role;
     private LocalDateTime joinDate;
     private MemberStatus memberStatus;
     private String progress;

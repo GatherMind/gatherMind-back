@@ -11,7 +11,7 @@ import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.entity.Study;
 import woongjin.gatherMind.entity.StudyMember;
 import woongjin.gatherMind.enums.MemberStatus;
-import woongjin.gatherMind.enums.Role;
+import woongjin.gatherMind.enums.StudyRole;
 import woongjin.gatherMind.enums.StudyStatus;
 import woongjin.gatherMind.exception.invalid.InvalidStudyStatusException;
 import woongjin.gatherMind.exception.unauthorized.UnauthorizedActionException;
@@ -62,7 +62,7 @@ public class StudyMemberService {
         }
 
         StudyMember studyMember = new StudyMember();
-        studyMember.setRole(Role.MEMBER);
+        studyMember.setRole(StudyRole.MEMBER);
         studyMember.setStatus(MemberStatus.PENDING);
         studyMember.setMember(member);
         studyMember.setStudy(study);

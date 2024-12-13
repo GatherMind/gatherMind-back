@@ -35,9 +35,13 @@ public class SecurityConfig {
                         .disable()
                 )
                 .authorizeHttpRequests(authorize -> authorize
+//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/member/**").hasAnyRole("USER", "ADMIN") // USER와 ADMIN 모두 접근 가능
+
                         .requestMatchers(
 //                                "/**",
 //                                "/api/member/**",
+                                "/api/admin/**",
                                 "/api/auth/**",
                                 "/api/member/check-email",
                                 "/api/member/check-nickname",

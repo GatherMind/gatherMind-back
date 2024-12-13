@@ -1,19 +1,19 @@
-INSERT INTO member (member_id, nickname, password, created_at, email, profile_image) VALUES
-('member1', 'Alpha', 'Password123', CURRENT_TIMESTAMP, 'user1@example.com', '/api/files/default-profile'),
-('member2', 'Beta', 'Password456', CURRENT_TIMESTAMP, 'user2@example.com', '/api/files/default-profile'),
-('member3', 'Gamma', 'Password789', CURRENT_TIMESTAMP, 'user3@example.com', '/api/files/default-profile'),
-('member4', 'Delta', 'Password101', CURRENT_TIMESTAMP, 'user4@example.com', '/api/files/default-profile'),
-('member5', 'Epsilon', 'Password202', CURRENT_TIMESTAMP, 'user5@example.com', '/api/files/default-profile'),
-('member6', 'Zeta', 'Password303', CURRENT_TIMESTAMP, 'user6@example.com', '/api/files/default-profile'),
-('member7', 'Eta', 'Password404', CURRENT_TIMESTAMP, 'user7@example.com', '/api/files/default-profile'),
-('member8', 'Theta', 'Password505', CURRENT_TIMESTAMP, 'user8@example.com', '/api/files/default-profile'),
-('member9', 'Iota', 'Password606', CURRENT_TIMESTAMP, 'user9@example.com', '/api/files/default-profile'),
-('member10', 'Kappa', 'Password707', CURRENT_TIMESTAMP, 'user10@example.com', '/api/files/default-profile'),
-('member11', 'Lambda', 'Password808', CURRENT_TIMESTAMP, 'user11@example.com', '/api/files/default-profile'),
-('member12', 'Mu', 'Password909', CURRENT_TIMESTAMP, 'user12@example.com', '/api/files/default-profile'),
-('member13', 'Nu', 'Password010', CURRENT_TIMESTAMP, 'user13@example.com', '/api/files/default-profile'),
-('member14', 'Xi', 'Password111', CURRENT_TIMESTAMP, 'user14@example.com', '/api/files/default-profile'),
-('member15', 'Omicron', 'Password222', CURRENT_TIMESTAMP, 'user15@example.com', '/api/files/default-profile');
+INSERT INTO member (member_id, nickname, password, created_at, email, profile_image, is_delete, role) VALUES
+('member1', 'Alpha', 'Password123', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user1@example.com', '/api/files/default-profile',0,1),
+('member2', 'Beta', 'Password456', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user2@example.com', '/api/files/default-profile',0,2),
+('member3', 'Gamma', 'Password789', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user3@example.com', '/api/files/default-profile',0,1),
+('member4', 'Delta', 'Password101', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user4@example.com', '/api/files/default-profile',0,2),
+('member5', 'Epsilon', 'Password202', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user5@example.com', '/api/files/default-profile',0,2),
+('member6', 'Zeta', 'Password303', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user6@example.com', '/api/files/default-profile',0,2),
+('member7', 'Eta', 'Password404', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user7@example.com', '/api/files/default-profile',0,2),
+('member8', 'Theta', 'Password505', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user8@example.com', '/api/files/default-profile',0,1),
+('member9', 'Iota', 'Password606', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user9@example.com', '/api/files/default-profile',0,2),
+('member10', 'Kappa', 'Password707', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user10@example.com', '/api/files/default-profile',0,1),
+('member11', 'Lambda', 'Password808', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user11@example.com', '/api/files/default-profile',0,2),
+('member12', 'Mu', 'Password909', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user12@example.com', '/api/files/default-profile',0,2),
+('member13', 'Nu', 'Password010', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user13@example.com', '/api/files/default-profile',0,2),
+('member14', 'Xi', 'Password111', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user14@example.com', '/api/files/default-profile',0,2),
+('member15', 'Omicron', 'Password222', CURRENT_TIMESTAMP- INTERVAL '1' DAY, 'user15@example.com', '/api/files/default-profile',0,2);
 
 
 INSERT INTO study (study_id, title, description, status, created_at, category) VALUES
@@ -72,7 +72,8 @@ INSERT INTO study_member (study_member_id, role, status, progress, joined_date, 
 (12, 2, 1, 'Progress 12', CURRENT_TIMESTAMP, 'member12', 2),
 (13, 1, 2, 'Progress 13', CURRENT_TIMESTAMP, 'member13', 3),
 (14, 2, 1, 'Progress 14', CURRENT_TIMESTAMP, 'member14', 4),
-(15, 1, 2, 'Progress 15', CURRENT_TIMESTAMP, 'member15', 5);
+(15, 1, 2, 'Progress 15', CURRENT_TIMESTAMP, 'member15', 5),
+(16, 1, 2, 'Progress 15', CURRENT_TIMESTAMP, 'member1', 2);
 
 INSERT INTO question (question_id, content, title, option, created_at, study_member_id) VALUES
 (1, 'Explain the purpose of HTML in web development.', 'Understanding HTML', 1, CURRENT_TIMESTAMP + INTERVAL '1' DAY, 1),
@@ -90,3 +91,6 @@ INSERT INTO question (question_id, content, title, option, created_at, study_mem
 (13, 'What is the significance of mobile-first design in web development?', 'Mobile-First Design Principles', 1, CURRENT_TIMESTAMP + INTERVAL '13' DAY, 13),
 (14, 'What are the steps involved in building a successful digital marketing campaign?', 'Digital Marketing Strategies', 2, CURRENT_TIMESTAMP + INTERVAL '14' DAY, 14),
 (15, 'How can public speaking skills be improved for professional settings?', 'Public Speaking Tips', 1, CURRENT_TIMESTAMP + INTERVAL '15' DAY, 15);
+
+INSERT INTO answer (answer_id, content, created_at, question_id, member_id) VALUES
+(1, 'answer 1', CURRENT_TIMESTAMP + INTERVAL '1' DAY, 1, 'member1');

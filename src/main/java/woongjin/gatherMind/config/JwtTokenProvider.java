@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.exception.unauthorized.MissingTokenException;
 import woongjin.gatherMind.exception.unauthorized.InvalidTokenException;
 
@@ -25,18 +26,6 @@ public class JwtTokenProvider {
         this.expirationTime = expirationTime;
     }
 
-//    public String createToken(String memberId) {
-//        Claims claims = Jwts.claims().setSubject(memberId);
-//        Date now = new Date();
-//        Date validity = new Date(now.getTime() + validityInMilliseconds);
-//
-//        return Jwts.builder()
-//                .setClaims(claims)
-//                .setIssuedAt(now)
-//                .setExpiration(validity)
-//                .signWith(secretKey)
-//                .compact();
-//    }
 
     // 토큰 생성
     public String createToken(String memberId) {
@@ -51,17 +40,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 클레임 정보를 포함하여 토큰 생성 (예: 역할 및 닉네임)
-    public String createTokenWithClaims(String memberId, String nickname, String role) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + expirationTime);
-
+    public String generateTokenWithRole(Member member) {
         return Jwts.builder()
-                .setSubject(memberId)
-                .claim("nickname", nickname)
-                .claim("role", role)
-                .setIssuedAt(now)
-                .setExpiration(validity)
+                .setSubject(member.getMemberId())
+                .claim("role", "ROLE_"+member.getRole().name()) // ROLE_USER, ROLE_ADMIN
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) // 1일 유효
+//                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .signWith(secretKey)
                 .compact();
     }

@@ -1,19 +1,17 @@
 package woongjin.gatherMind.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import woongjin.gatherMind.converters.RoleConverter;
+import woongjin.gatherMind.enums.Role;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -31,6 +29,9 @@ public class Member {
     private String email;
     private String password;
 
+    @Convert(converter = RoleConverter.class)
+    private Role role;
+
 //    private boolean isEmailVerified = false; // 초기값 false
 
     @Column(nullable = false)
@@ -39,6 +40,8 @@ public class Member {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    private boolean isDelete = false;
 
     // Member - StudyMember (1:N)
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
