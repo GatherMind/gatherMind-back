@@ -61,10 +61,15 @@ public class SecurityConfig {
                         .frameOptions(frameOptions -> frameOptions.sameOrigin()) // 같은 출처의 frame 허용
                 )
                 .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login") // 커스텀 로그인 페이지 설정
                         .defaultSuccessUrl("/oauth2/success", true) // 로그인 성공 후 리다이렉트 경로
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService) // 사용자 정보 서비스 설정
                         )
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login") // 로그아웃 후 리다이렉트 경로
+                        .permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                                 .formLogin(form -> form.disable()) // 기본 로그인 페이지 비활성화

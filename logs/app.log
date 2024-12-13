@@ -7341,3 +7341,533 @@ woongjin.gatherMind.exception.unauthorized.MissingTokenException: 토큰이 요�
 2024-12-13 12:41:15 INFO  w.g.aop.RequestResponseLoggingAspect - Response: <200 OK OK,[StudyDTO(studyId=1, title=Introduction to Web Development, description=Learn the basics of building web applications, status=OPEN, category=FULL_STACK, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=2, title=Data Science Essentials, description=An overview of essential data science tools and techniques, status=OPEN, category=DATA_SCIENCE, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=3, title=Advanced Python Programming, description=Master Python for complex software development, status=CLOSED, category=FULL_STACK, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=4, title=Project Management Skills, description=Learn effective project management methodologies, status=OPEN, category=PROJECT_MANAGEMENT, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=5, title=Digital Marketing Strategies, description=Comprehensive strategies for online marketing, status=OPEN, category=SOFT_SKILLS, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=6, title=AI and Machine Learning, description=Explore AI principles and machine learning models, status=CLOSED, category=AI_ML, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=7, title=UI/UX Design Fundamentals, description=Design user-friendly and engaging interfaces, status=OPEN, category=UI_UX_DESIGN, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=8, title=Cloud Computing Basics, description=Understand the foundation of cloud infrastructure, status=CLOSED, category=CLOUD_COMPUTING, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=9, title=Cybersecurity Principles, description=Learn how to protect systems against cyber threats, status=OPEN, category=CYBERSECURITY, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=10, title=Mobile App Development, description=Build feature-rich mobile applications, status=OPEN, category=MOBILE_APP, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=11, title=Blockchain Technology, description=Explore the fundamentals of blockchain, status=CLOSED, category=BLOCKCHAIN, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=12, title=Game Development Workshop, description=Develop games using popular game engines, status=CLOSED, category=GAME_DEVELOPMENT, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=13, title=Creative Writing for Beginners, description=Learn to write compelling stories and content, status=OPEN, category=SOFT_SKILLS, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=14, title=Entrepreneurship 101, description=Build a strong foundation for starting your business, status=CLOSED, category=ENTREPRENEURSHIP, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=15, title=Public Speaking Mastery, description=Develop confidence in presenting to audiences, status=CLOSED, category=SOFT_SKILLS, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=16, title=Networking Basics, description=Learn how computer networks operate and communicate, status=OPEN, category=NETWORKING, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=17, title=DevOps Fundamentals, description=Learn DevOps principles and CI/CD practices, status=OPEN, category=DEVOPS, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=18, title=Database Design, description=Master database normalization and schema design, status=CLOSED, category=DATABASE, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=19, title=Advanced Cybersecurity Techniques, description=Protect systems with advanced security measures, status=CLOSED, category=CYBERSECURITY, createdAt=2024-12-13T12:41:15.354089), StudyDTO(studyId=20, title=Front-End Frameworks, description=Learn modern front-end frameworks like React and Angular, status=OPEN, category=FRONT_END, createdAt=2024-12-13T12:41:15.354089)],[]>
 2024-12-13 12:41:18 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
 2024-12-13 12:41:18 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
+2024-12-13 14:32:15 INFO  w.gatherMind.GatherMindApplication - Starting GatherMindApplication using Java 17.0.13 with PID 18736 (C:\gatherMind\backsample\build\classes\java\main started by seont in C:\gatherMind\backsample)
+2024-12-13 14:32:15 DEBUG w.gatherMind.GatherMindApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-13 14:32:15 INFO  w.gatherMind.GatherMindApplication - The following 2 profiles are active: "local", "common"
+2024-12-13 14:32:15 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-12-13 14:32:15 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-12-13 14:32:16 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-13 14:32:16 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 9 JPA repository interfaces.
+2024-12-13 14:32:17 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-12-13 14:32:17 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-12-13 14:32:17 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-13 14:32:17 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-13 14:32:17 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-13 14:32:17 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1766 ms
+2024-12-13 14:32:17 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-12-13 14:32:17 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2024-12-13 14:32:17 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-12-13 14:32:17 INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2024-12-13 14:32:18 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13 14:32:18 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-13 14:32:18 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-12-13 14:32:18 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-13 14:32:18 WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-13 14:32:19 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-13 14:32:19 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-13 14:32:19 INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-13 14:32:20 DEBUG w.g.auth.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2024-12-13 14:32:20 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-13 14:32:20 INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-12-13 14:32:21 INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-12-13 14:32:21 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-12-13 14:32:21 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-12-13 14:32:21 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-12-13 14:32:21 INFO  w.gatherMind.GatherMindApplication - Started GatherMindApplication in 6.491 seconds (process running for 6.844)
+2024-12-13 14:32:22 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-13 14:32:22 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-13 14:32:22 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Incoming request: GET /api/study/getallstudies
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyController.getAllStudies()
+2024-12-13 14:32:22 INFO  w.gatherMind.aop.LoggingAspect - Starting method: getAllStudies with args: []
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Incoming request: GET /api/study-categories
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyCategoryController.getAllCategories()
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyCategoryController.getAllCategories() completed
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Response: <200 OK OK,[StudyCategoryResponseDTO(name=ALL, code=0), StudyCategoryResponseDTO(name=FRONT_END, code=1), StudyCategoryResponseDTO(name=BACK_END, code=2), StudyCategoryResponseDTO(name=FULL_STACK, code=3), StudyCategoryResponseDTO(name=DATA_SCIENCE, code=4), StudyCategoryResponseDTO(name=MOBILE_APP, code=5), StudyCategoryResponseDTO(name=AI_ML, code=6), StudyCategoryResponseDTO(name=DEVOPS, code=7), StudyCategoryResponseDTO(name=GAME_DEVELOPMENT, code=8), StudyCategoryResponseDTO(name=SECURITY, code=9), StudyCategoryResponseDTO(name=UI_UX_DESIGN, code=10), StudyCategoryResponseDTO(name=DATABASE, code=11), StudyCategoryResponseDTO(name=CLOUD_COMPUTING, code=12), StudyCategoryResponseDTO(name=BLOCKCHAIN, code=13), StudyCategoryResponseDTO(name=PROJECT_MANAGEMENT, code=14), StudyCategoryResponseDTO(name=NETWORKING, code=15), StudyCategoryResponseDTO(name=CYBERSECURITY, code=16), StudyCategoryResponseDTO(name=SOFT_SKILLS, code=17), StudyCategoryResponseDTO(name=ENTREPRENEURSHIP, code=18)],[]>
+2024-12-13 14:32:22 INFO  w.gatherMind.aop.LoggingAspect - Completed method: getAllStudies in 97 ms
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyController.getAllStudies() completed
+2024-12-13 14:32:22 INFO  w.g.aop.RequestResponseLoggingAspect - Response: <200 OK OK,[StudyDTO(studyId=1, title=Introduction to Web Development, description=Learn the basics of building web applications, status=OPEN, category=FULL_STACK, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=2, title=Data Science Essentials, description=An overview of essential data science tools and techniques, status=OPEN, category=DATA_SCIENCE, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=3, title=Advanced Python Programming, description=Master Python for complex software development, status=CLOSED, category=FULL_STACK, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=4, title=Project Management Skills, description=Learn effective project management methodologies, status=OPEN, category=PROJECT_MANAGEMENT, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=5, title=Digital Marketing Strategies, description=Comprehensive strategies for online marketing, status=OPEN, category=SOFT_SKILLS, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=6, title=AI and Machine Learning, description=Explore AI principles and machine learning models, status=CLOSED, category=AI_ML, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=7, title=UI/UX Design Fundamentals, description=Design user-friendly and engaging interfaces, status=OPEN, category=UI_UX_DESIGN, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=8, title=Cloud Computing Basics, description=Understand the foundation of cloud infrastructure, status=CLOSED, category=CLOUD_COMPUTING, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=9, title=Cybersecurity Principles, description=Learn how to protect systems against cyber threats, status=OPEN, category=CYBERSECURITY, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=10, title=Mobile App Development, description=Build feature-rich mobile applications, status=OPEN, category=MOBILE_APP, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=11, title=Blockchain Technology, description=Explore the fundamentals of blockchain, status=CLOSED, category=BLOCKCHAIN, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=12, title=Game Development Workshop, description=Develop games using popular game engines, status=CLOSED, category=GAME_DEVELOPMENT, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=13, title=Creative Writing for Beginners, description=Learn to write compelling stories and content, status=OPEN, category=SOFT_SKILLS, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=14, title=Entrepreneurship 101, description=Build a strong foundation for starting your business, status=CLOSED, category=ENTREPRENEURSHIP, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=15, title=Public Speaking Mastery, description=Develop confidence in presenting to audiences, status=CLOSED, category=SOFT_SKILLS, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=16, title=Networking Basics, description=Learn how computer networks operate and communicate, status=OPEN, category=NETWORKING, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=17, title=DevOps Fundamentals, description=Learn DevOps principles and CI/CD practices, status=OPEN, category=DEVOPS, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=18, title=Database Design, description=Master database normalization and schema design, status=CLOSED, category=DATABASE, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=19, title=Advanced Cybersecurity Techniques, description=Protect systems with advanced security measures, status=CLOSED, category=CYBERSECURITY, createdAt=2024-12-13T14:32:21.720698), StudyDTO(studyId=20, title=Front-End Frameworks, description=Learn modern front-end frameworks like React and Angular, status=OPEN, category=FRONT_END, createdAt=2024-12-13T14:32:21.720698)],[]>
+2024-12-13 14:32:25 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
+2024-12-13 14:32:25 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
+2024-12-13 14:32:28 ERROR w.gatherMind.aop.LoggingAspect - Error cloning object
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.Instant` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest["accessToken"]->org.springframework.security.oauth2.core.OAuth2AccessToken["issuedAt"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1330)
+	at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4799)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:4040)
+	at woongjin.gatherMind.aop.LoggingAspect.cloneObject(LoggingAspect.java:82)
+	at woongjin.gatherMind.aop.LoggingAspect.maskSensitiveFields(LoggingAspect.java:63)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:992)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:575)
+	at java.base/java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:616)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:622)
+	at woongjin.gatherMind.aop.LoggingAspect.logExecutionTime(LoggingAspect.java:32)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at woongjin.gatherMind.service.CustomOAuth2UserService$$SpringCGLIB$$0.loadUser(<generated>)
+	at org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationProvider.authenticate(OAuth2LoginAuthenticationProvider.java:119)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-12-13 14:32:28 INFO  w.gatherMind.aop.LoggingAspect - Starting method: loadUser with args: [org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest@74e297ae]
+2024-12-13 14:32:28 INFO  w.gatherMind.aop.LoggingAspect - Completed method: loadUser in 188 ms
+2024-12-13 14:32:28 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No static resource oauth2/success.
+2024-12-13 14:32:28 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource oauth2/success.]
+2024-12-13 14:36:31 INFO  w.gatherMind.GatherMindApplication - Starting GatherMindApplication using Java 17.0.13 with PID 11984 (C:\gatherMind\backsample\build\classes\java\main started by seont in C:\gatherMind\backsample)
+2024-12-13 14:36:31 DEBUG w.gatherMind.GatherMindApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-13 14:36:31 INFO  w.gatherMind.GatherMindApplication - The following 2 profiles are active: "local", "common"
+2024-12-13 14:36:31 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-12-13 14:36:31 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-12-13 14:36:32 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-13 14:36:32 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 66 ms. Found 9 JPA repository interfaces.
+2024-12-13 14:36:33 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-12-13 14:36:33 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-12-13 14:36:33 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-13 14:36:33 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-13 14:36:33 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-13 14:36:33 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1566 ms
+2024-12-13 14:36:33 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-12-13 14:36:33 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2024-12-13 14:36:33 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-12-13 14:36:33 INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2024-12-13 14:36:33 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-13 14:36:33 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-13 14:36:33 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-12-13 14:36:33 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-13 14:36:33 WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-13 14:36:34 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-13 14:36:34 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-13 14:36:35 INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-13 14:36:35 DEBUG w.g.auth.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2024-12-13 14:36:36 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-13 14:36:36 INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-12-13 14:36:36 INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-12-13 14:36:37 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-12-13 14:36:37 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-12-13 14:36:37 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-12-13 14:36:37 INFO  w.gatherMind.GatherMindApplication - Started GatherMindApplication in 6.147 seconds (process running for 6.514)
+2024-12-13 14:36:43 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-13 14:36:43 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-13 14:36:43 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Incoming request: GET /api/study/getallstudies
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyController.getAllStudies()
+2024-12-13 14:36:43 INFO  w.gatherMind.aop.LoggingAspect - Starting method: getAllStudies with args: []
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Incoming request: GET /api/study-categories
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyCategoryController.getAllCategories()
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyCategoryController.getAllCategories() completed
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Response: <200 OK OK,[StudyCategoryResponseDTO(name=ALL, code=0), StudyCategoryResponseDTO(name=FRONT_END, code=1), StudyCategoryResponseDTO(name=BACK_END, code=2), StudyCategoryResponseDTO(name=FULL_STACK, code=3), StudyCategoryResponseDTO(name=DATA_SCIENCE, code=4), StudyCategoryResponseDTO(name=MOBILE_APP, code=5), StudyCategoryResponseDTO(name=AI_ML, code=6), StudyCategoryResponseDTO(name=DEVOPS, code=7), StudyCategoryResponseDTO(name=GAME_DEVELOPMENT, code=8), StudyCategoryResponseDTO(name=SECURITY, code=9), StudyCategoryResponseDTO(name=UI_UX_DESIGN, code=10), StudyCategoryResponseDTO(name=DATABASE, code=11), StudyCategoryResponseDTO(name=CLOUD_COMPUTING, code=12), StudyCategoryResponseDTO(name=BLOCKCHAIN, code=13), StudyCategoryResponseDTO(name=PROJECT_MANAGEMENT, code=14), StudyCategoryResponseDTO(name=NETWORKING, code=15), StudyCategoryResponseDTO(name=CYBERSECURITY, code=16), StudyCategoryResponseDTO(name=SOFT_SKILLS, code=17), StudyCategoryResponseDTO(name=ENTREPRENEURSHIP, code=18)],[]>
+2024-12-13 14:36:43 INFO  w.gatherMind.aop.LoggingAspect - Completed method: getAllStudies in 96 ms
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Handler method: StudyController.getAllStudies() completed
+2024-12-13 14:36:43 INFO  w.g.aop.RequestResponseLoggingAspect - Response: <200 OK OK,[StudyDTO(studyId=1, title=Introduction to Web Development, description=Learn the basics of building web applications, status=OPEN, category=FULL_STACK, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=2, title=Data Science Essentials, description=An overview of essential data science tools and techniques, status=OPEN, category=DATA_SCIENCE, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=3, title=Advanced Python Programming, description=Master Python for complex software development, status=CLOSED, category=FULL_STACK, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=4, title=Project Management Skills, description=Learn effective project management methodologies, status=OPEN, category=PROJECT_MANAGEMENT, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=5, title=Digital Marketing Strategies, description=Comprehensive strategies for online marketing, status=OPEN, category=SOFT_SKILLS, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=6, title=AI and Machine Learning, description=Explore AI principles and machine learning models, status=CLOSED, category=AI_ML, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=7, title=UI/UX Design Fundamentals, description=Design user-friendly and engaging interfaces, status=OPEN, category=UI_UX_DESIGN, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=8, title=Cloud Computing Basics, description=Understand the foundation of cloud infrastructure, status=CLOSED, category=CLOUD_COMPUTING, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=9, title=Cybersecurity Principles, description=Learn how to protect systems against cyber threats, status=OPEN, category=CYBERSECURITY, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=10, title=Mobile App Development, description=Build feature-rich mobile applications, status=OPEN, category=MOBILE_APP, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=11, title=Blockchain Technology, description=Explore the fundamentals of blockchain, status=CLOSED, category=BLOCKCHAIN, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=12, title=Game Development Workshop, description=Develop games using popular game engines, status=CLOSED, category=GAME_DEVELOPMENT, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=13, title=Creative Writing for Beginners, description=Learn to write compelling stories and content, status=OPEN, category=SOFT_SKILLS, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=14, title=Entrepreneurship 101, description=Build a strong foundation for starting your business, status=CLOSED, category=ENTREPRENEURSHIP, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=15, title=Public Speaking Mastery, description=Develop confidence in presenting to audiences, status=CLOSED, category=SOFT_SKILLS, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=16, title=Networking Basics, description=Learn how computer networks operate and communicate, status=OPEN, category=NETWORKING, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=17, title=DevOps Fundamentals, description=Learn DevOps principles and CI/CD practices, status=OPEN, category=DEVOPS, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=18, title=Database Design, description=Master database normalization and schema design, status=CLOSED, category=DATABASE, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=19, title=Advanced Cybersecurity Techniques, description=Protect systems with advanced security measures, status=CLOSED, category=CYBERSECURITY, createdAt=2024-12-13T14:36:37.171336), StudyDTO(studyId=20, title=Front-End Frameworks, description=Learn modern front-end frameworks like React and Angular, status=OPEN, category=FRONT_END, createdAt=2024-12-13T14:36:37.171336)],[]>
+2024-12-13 14:36:44 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
+2024-12-13 14:36:44 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
+2024-12-13 14:36:47 ERROR w.gatherMind.aop.LoggingAspect - Error cloning object
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.Instant` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest["accessToken"]->org.springframework.security.oauth2.core.OAuth2AccessToken["issuedAt"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1330)
+	at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4799)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:4040)
+	at woongjin.gatherMind.aop.LoggingAspect.cloneObject(LoggingAspect.java:82)
+	at woongjin.gatherMind.aop.LoggingAspect.maskSensitiveFields(LoggingAspect.java:63)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:992)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:575)
+	at java.base/java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:616)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:622)
+	at woongjin.gatherMind.aop.LoggingAspect.logExecutionTime(LoggingAspect.java:32)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at woongjin.gatherMind.service.CustomOAuth2UserService$$SpringCGLIB$$0.loadUser(<generated>)
+	at org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationProvider.authenticate(OAuth2LoginAuthenticationProvider.java:119)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-12-13 14:36:47 INFO  w.gatherMind.aop.LoggingAspect - Starting method: loadUser with args: [org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest@412e8ace]
+2024-12-13 14:36:47 INFO  w.gatherMind.aop.LoggingAspect - Completed method: loadUser in 177 ms
+2024-12-13 14:36:47 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No static resource oauth2/success.
+2024-12-13 14:36:47 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource oauth2/success.]
+2024-12-13 14:36:48 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
+2024-12-13 14:36:48 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
+2024-12-13 14:36:49 ERROR w.gatherMind.aop.LoggingAspect - Error cloning object
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.Instant` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest["accessToken"]->org.springframework.security.oauth2.core.OAuth2AccessToken["issuedAt"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1330)
+	at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4799)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:4040)
+	at woongjin.gatherMind.aop.LoggingAspect.cloneObject(LoggingAspect.java:82)
+	at woongjin.gatherMind.aop.LoggingAspect.maskSensitiveFields(LoggingAspect.java:63)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:992)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:575)
+	at java.base/java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:616)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:622)
+	at woongjin.gatherMind.aop.LoggingAspect.logExecutionTime(LoggingAspect.java:32)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at woongjin.gatherMind.service.CustomOAuth2UserService$$SpringCGLIB$$0.loadUser(<generated>)
+	at org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationProvider.authenticate(OAuth2LoginAuthenticationProvider.java:119)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-12-13 14:36:49 INFO  w.gatherMind.aop.LoggingAspect - Starting method: loadUser with args: [org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest@22c6824]
+2024-12-13 14:36:49 ERROR w.gatherMind.aop.LoggingAspect - Exception in method : loadUser with message : OAuth ID and Email cannot be null
+2024-12-13 14:36:49 ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+java.lang.IllegalArgumentException: OAuth ID and Email cannot be null
+	at woongjin.gatherMind.service.CustomOAuth2UserService.processOAuthUser(CustomOAuth2UserService.java:87)
+	at woongjin.gatherMind.service.CustomOAuth2UserService.loadUser(CustomOAuth2UserService.java:46)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at woongjin.gatherMind.aop.LoggingAspect.logExecutionTime(LoggingAspect.java:39)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at woongjin.gatherMind.service.CustomOAuth2UserService$$SpringCGLIB$$0.loadUser(<generated>)
+	at org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationProvider.authenticate(OAuth2LoginAuthenticationProvider.java:119)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-12-13 14:36:50 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
+2024-12-13 14:36:50 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
+2024-12-13 14:36:52 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
+2024-12-13 14:36:52 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
+2024-12-13 14:36:53 ERROR w.g.exception.GlobalExceptionHandler - Unexpected exception occurred: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User
+2024-12-13 14:36:53 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.user.OAuth2User]
