@@ -10,9 +10,15 @@ import java.util.List;
 
 public class MemberDetails implements UserDetails {
     private final Member member;
+    private final Collection<? extends GrantedAuthority> authorities;
 
-    public MemberDetails(Member member) {
+//    public MemberDetails(Member member) {
+//        this.member = member;
+//    }
+
+    public MemberDetails(Member member, List<GrantedAuthority> grantedAuthorities) {
         this.member = member;
+        this.authorities = grantedAuthorities;
     }
 
     @Override

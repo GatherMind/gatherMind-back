@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import woongjin.gatherMind.converters.RoleConverter;
+import woongjin.gatherMind.converters.StudyRoleConverter;
 import woongjin.gatherMind.enums.MemberStatus;
-import woongjin.gatherMind.enums.Role;
+import woongjin.gatherMind.enums.StudyRole;
 
 
 import java.time.LocalDateTime;
@@ -23,8 +23,8 @@ public class StudyMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studyMemberId;
-    @Convert(converter = RoleConverter.class)
-    private Role role;
+    @Convert(converter = StudyRoleConverter.class)
+    private StudyRole role;
     private MemberStatus status;
     private String progress;
 
@@ -51,7 +51,7 @@ public class StudyMember {
      * @param progress 진행도
      * @return 생성된 스터디 멤버
      */
-    public static StudyMember createStudyMember(Study study, Member member, Role role, MemberStatus memberStatus, String progress) {
+    public static StudyMember createStudyMember(Study study, Member member, StudyRole role, MemberStatus memberStatus, String progress) {
         StudyMember studyMember = new StudyMember();
         studyMember.setRole(role);
         studyMember.setStatus(memberStatus);

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import woongjin.gatherMind.DTO.AdminGetAnswerDTO;
 import woongjin.gatherMind.DTO.AnswerDTOInQuestion;
 import woongjin.gatherMind.entity.Answer;
 
@@ -29,5 +30,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query("SELECT COUNT(a) FROM Answer a WHERE a.memberId = :memberId")
     long countByMemberId(@Param("memberId") String memberId);
 
+    List<Answer> findAllByOrderByCreatedAtDesc();
 }
 

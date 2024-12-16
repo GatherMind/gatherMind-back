@@ -40,6 +40,15 @@ public class AuthController {
         return ResponseEntity.ok(Collections.singletonMap("token", memberService.authenticate(loginDTO)));
     }
 
+    //    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        String token = jwtTokenProvider.createToken(authentication.getName());
+//        return ResponseEntity.ok(new JwtResponse(token));
+//    }
+
     /**
      * 회원가입 처리
      */

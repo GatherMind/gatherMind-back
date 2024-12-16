@@ -1,6 +1,7 @@
 package woongjin.gatherMind.exception.notFound;
 
-public class AuthProviderNotFoundException extends Throwable {
-    public AuthProviderNotFoundException(Object p0) {
+public class AuthProviderNotFoundException extends NotFoundException {
+    public AuthProviderNotFoundException(String message) {
+        super(message);
     }
 }

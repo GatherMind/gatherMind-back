@@ -8,9 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.*;
 
+import woongjin.gatherMind.auth.MemberDetails;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.entity.Question;
 import woongjin.gatherMind.service.AnswerService;
@@ -30,10 +32,10 @@ public class QuestionController {
             summary = "질문(게시글) 생성"
     )
     @PostMapping
-    public ResponseEntity<Question> createQuestionWithFile(HttpServletRequest request,
+    public ResponseEntity<Question> createQuestionWithFile(@AuthenticationPrincipal MemberDetails memberDetails,
                                                            @Valid @ModelAttribute QuestionCreateWithFileDTO questionDTO,
                                                            @RequestParam Long studyId) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         return new ResponseEntity<>(this.questionService.createQuestionWithFile(questionDTO, memberId, studyId), HttpStatus.CREATED);
     }
 
@@ -50,10 +52,10 @@ public class QuestionController {
             summary = "질문 수정"
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Question> updateQuestionWithFile(HttpServletRequest request,
+    public ResponseEntity<Question> updateQuestionWithFile(@AuthenticationPrincipal MemberDetails memberDetails,
                                                            @PathVariable Long id,
                                                            @Valid @ModelAttribute QuestionCreateWithFileDTO questionDTO) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         return new ResponseEntity<>(this.questionService.updateQuestionWithFile(id, questionDTO, memberId), HttpStatus.OK);
     }
 
@@ -61,8 +63,8 @@ public class QuestionController {
             summary = "질문 삭제"
     )
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<QuestionInfoDTO> deleteQuestion(HttpServletRequest request, @PathVariable Long id) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<QuestionInfoDTO> deleteQuestion(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable Long id) {
+        String memberId = memberDetails.getUsername();
         this.questionService.deleteQuestion(id, memberId);
         return ResponseEntity.noContent().build(); // 204 No Content
     }

@@ -1,6 +1,7 @@
 package woongjin.gatherMind.DTO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.List;
 public class QuestionCreateWithFileDTO {
     private Long questionId;
     private Long fileMetaDataId;
-    @NotBlank
+    @NotNull
     private QuestionOption option;
     @NotBlank
     private String title;

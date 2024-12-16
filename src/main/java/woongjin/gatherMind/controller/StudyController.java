@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.*;
+import woongjin.gatherMind.auth.MemberDetails;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.entity.Study;
 import woongjin.gatherMind.service.ScheduleService;
@@ -30,8 +32,9 @@ public class StudyController {
 
     @PostMapping
     @Operation(summary = "스터디 생성", description = "스터디 이름, 설명, 상태, 생성자 ID가 포함된 객체가 필요합니다.")
-    public ResponseEntity<Study> createStudy(@RequestBody StudyCreateRequestDTO dto, HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<Study> createStudy(@RequestBody StudyCreateRequestDTO dto, @AuthenticationPrincipal MemberDetails memberDetails) {
+
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.status(HttpStatus.CREATED).body(studyService.createStudy(dto, memberId));
     }
 
@@ -50,8 +53,8 @@ public class StudyController {
             summary = "스터디 수정",
             description = "스터디 ID를 경로 변수로 받아 해당 스터디의 정보를 수정합니다. 요청 본문에는 수정할 스터디 정보가 포함된 Study 객체를 전달합니다."
     )
-    public ResponseEntity<StudyInfoDTO> updateStudy(@PathVariable Long studyId, @RequestBody Study study, HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<StudyInfoDTO> updateStudy(@PathVariable Long studyId, @RequestBody Study study, @AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.ok(studyService.updateStudy(studyId, study, memberId));
     }
 
@@ -60,8 +63,8 @@ public class StudyController {
     @Operation(
             summary = "스터디 삭제"
     )
-    public ResponseEntity<StudyInfoDTO> deleteStudy(@PathVariable Long studyId,  HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<StudyInfoDTO> deleteStudy(@PathVariable Long studyId,  @AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         studyService.deleteStudy(memberId, studyId);
         return ResponseEntity.noContent().build(); // 204 No Content
     }
@@ -97,7 +100,7 @@ public class StudyController {
     public ResponseEntity<Page<QuestionWithoutAnswerDTO>> getBoardsByStudyId(
             @PathVariable Long studyId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
+            @RequestParam(defaultValue = "9") int size) {
         Page<QuestionWithoutAnswerDTO> boards = studyService.getBoards(studyId, page, size);
         return ResponseEntity.ok(boards);
     }
@@ -118,8 +121,6 @@ public class StudyController {
     @Operation(
             summary = "모든 스터디 조회"
     )
-
-
     @GetMapping("/getallstudies")
     public ResponseEntity<List<StudyDTO>> getAllStudies() {
 
@@ -127,9 +128,4 @@ public class StudyController {
         return ResponseEntity.ok(studyDTOs);
     }
 
-//
-//    @GetMapping("/findbymember/{memberId}")
-//    public List<StudyDTO> getStudiesbyStudyId(@PathVariable String memberId) {
-//        return studyService.getStudiesByMemberId(memberId);
-//    }
 }

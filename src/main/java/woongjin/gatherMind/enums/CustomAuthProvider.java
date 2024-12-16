@@ -2,6 +2,7 @@ package woongjin.gatherMind.enums;
 
 import woongjin.gatherMind.constants.ErrorMessages;
 import woongjin.gatherMind.exception.notFound.AuthProviderNotFoundException;
+import woongjin.gatherMind.exception.notFound.OAuthProviderCodeNotFoundException;
 
 public enum CustomAuthProvider {
     LOCAL(0, "local"),     // 일반 회원가입
@@ -33,7 +34,7 @@ public enum CustomAuthProvider {
                 return provider;
             }
         }
-        throw new AuthProviderNotFoundException(ErrorMessages.AUTH_PROVIDER_NOT_FOUND);
+        throw new OAuthProviderCodeNotFoundException(ErrorMessages.AUTH_PROVIDER_NOT_FOUND);
     }
 
     // 문자열 기반 변환 (OAuth2 RegistrationId에 대응)
@@ -43,6 +44,6 @@ public enum CustomAuthProvider {
                 return provider;
             }
         }
-        throw new AuthProviderNotFoundException(ErrorMessages.AUTH_PROVIDER_NOT_FOUND);
+        throw new OAuthProviderCodeNotFoundException(ErrorMessages.AUTH_PROVIDER_NOT_FOUND);
     }
 }

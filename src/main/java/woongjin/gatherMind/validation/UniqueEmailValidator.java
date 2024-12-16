@@ -13,8 +13,8 @@ public class UniqueEmailValidator implements Validator<String> {
     private final MemberRepository memberRepository;
 
     @Override
-    public boolean isValid(String memberId) {
-        return !memberRepository.existsByEmail(memberId);
+    public boolean isValid(String email) {
+        return !memberRepository.existsByEmail(email);
     }
 
     @Override

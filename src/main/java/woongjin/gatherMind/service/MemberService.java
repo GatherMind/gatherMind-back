@@ -5,12 +5,16 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import woongjin.gatherMind.DTO.*;
 
+import woongjin.gatherMind.config.CustomOAuth2SuccessHandler;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.enums.CustomAuthProvider;
 import woongjin.gatherMind.enums.CustomAuthProvider;
+import woongjin.gatherMind.enums.Role;
 import woongjin.gatherMind.exception.conflict.DuplicateEmailException;
 import woongjin.gatherMind.exception.conflict.DuplicateMemberIdException;
 import woongjin.gatherMind.exception.conflict.DuplicateNicknameException;
@@ -29,8 +33,10 @@ import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.repository.AnswerRepository;
 import woongjin.gatherMind.validation.*;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -93,6 +99,7 @@ public class MemberService {
         member.setNickname(registerDTO.getNickname());
         member.setOauthProvider(CustomAuthProvider.LOCAL);
         member.setProfileImage(DEFAULT_PROFILE_IMAGE_URL);
+        member.setRole(Role.USER);
 
         return memberRepository.save(member);
     }
@@ -111,7 +118,8 @@ public class MemberService {
         if (!passwordEncoder.matches(loginDTO.getPassword(), member.getPassword())) {
             throw new InvalidPasswordException("비밀번호가 잘못되었습니다.");
         }
-        return jwtTokenProvider.createToken(loginDTO.getMemberId());
+//        return jwtTokenProvider.createToken(loginDTO.getMemberId());
+        return jwtTokenProvider.generateTokenWithRole(member);
     }
 
 
@@ -144,6 +152,12 @@ public class MemberService {
      */
     @Transactional
     public void deleteAccount(String memberId) {
+        Member member = commonLookupService.findByMemberId(memberId);
+        memberRepository.delete(member);
+    }
+
+    @Transactional
+    public void logicDeleteAccount(String memberId) {
         Member member = commonLookupService.findByMemberId(memberId);
         memberRepository.delete(member);
     }
@@ -202,6 +216,15 @@ public class MemberService {
                 .stream().map(AnswerDTO::new).toList();
     }
 
+    @Transactional
+    public Member saveOrUpdateOAuthUser(CustomAuthProvider provider, String oauthId, String email, String name) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseGet(() -> new Member(RandomStringGenerator(), provider, oauthId, email));
+
+        member.setNickname(name);
+        return memberRepository.save(member);
+    }
+
     public String getNicknameById(String memberId) {
         return memberRepository.findById(memberId)
                 .map(Member::getNickname)
@@ -241,7 +264,12 @@ public class MemberService {
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new UsernameNotFoundException("회원 ID를 찾을 수 없습니다: " + memberId));
-        return new MemberDetails(member);
+
+
+        String roleName = "ROLE_" + member.getRole().name();
+        GrantedAuthority authority = new SimpleGrantedAuthority(roleName);
+
+        return new MemberDetails(member, Collections.singletonList(authority));
     }
 
     public Member findByEmail(String email) {
@@ -262,4 +290,18 @@ public class MemberService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with memberId: " + memberId));
     }
 
+    private String RandomStringGenerator() {
+        final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        final int MAX_LENGTH = 20;
+
+        SecureRandom random = new SecureRandom();
+        StringBuilder stringBuilder = new StringBuilder(MAX_LENGTH);
+
+        for (int i = 0; i < MAX_LENGTH; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            stringBuilder.append(CHARACTERS.charAt(randomIndex));
+        }
+
+        return stringBuilder.toString();
+    }
 }

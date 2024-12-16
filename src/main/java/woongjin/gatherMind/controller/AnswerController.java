@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import woongjin.gatherMind.DTO.AnswerCreateRequestDTO;
 import woongjin.gatherMind.DTO.AnswerDTO;
 import woongjin.gatherMind.DTO.AnswerDTOInQuestion;
 import woongjin.gatherMind.DTO.UpdateAnswerRequestDTO;
+import woongjin.gatherMind.auth.MemberDetails;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.entity.Answer;
 import woongjin.gatherMind.service.AnswerService;
@@ -37,8 +39,8 @@ public class AnswerController {
             summary = "댓글 생성"
     )
     @PostMapping
-    public ResponseEntity<AnswerDTOInQuestion> createAnswer(HttpServletRequest request,@Valid @RequestBody AnswerCreateRequestDTO answerDTO) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<AnswerDTOInQuestion> createAnswer(@AuthenticationPrincipal MemberDetails memberDetails , @Valid @RequestBody AnswerCreateRequestDTO answerDTO) {
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.status(HttpStatus.CREATED).body(answerService.createAnswer(answerDTO, memberId));
     }
 
@@ -48,11 +50,11 @@ public class AnswerController {
     )
     @PutMapping(value = "/{id}")
     public ResponseEntity<AnswerDTOInQuestion> updateAnswer(
-            HttpServletRequest request,
+            @AuthenticationPrincipal MemberDetails memberDetails,
             @PathVariable Long id,
             @Valid @RequestBody UpdateAnswerRequestDTO dto)
     {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.status(HttpStatus.OK).body(answerService.updateAnswer(id, dto, memberId));
     }
 
@@ -61,8 +63,8 @@ public class AnswerController {
             summary = "댓글 삭제"
     )
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<AnswerDTOInQuestion> deleteAnswer(HttpServletRequest request, @PathVariable Long id) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<AnswerDTOInQuestion> deleteAnswer(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable Long id) {
+        String memberId = memberDetails.getUsername();
         this.answerService.deleteAnswer(id, memberId);
         return ResponseEntity.noContent().build();
     }// 204 No Content}

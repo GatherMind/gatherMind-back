@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.*;
 
+import woongjin.gatherMind.auth.MemberDetails;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.exception.invalid.InvalidNicknameException;
@@ -53,9 +55,9 @@ public class MemberController {
     @GetMapping("/role")
     public ResponseEntity<MemberAndStatusRoleDTO> getMemberAndRoleByMemberId(
             @RequestParam Long studyId,
-            HttpServletRequest request
+            @AuthenticationPrincipal MemberDetails memberDetails
     ) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.ok(memberService.getMemberAndRoleByMemberId(memberId, studyId));
     }
 
@@ -64,8 +66,10 @@ public class MemberController {
      */
     @Operation(summary = "내 정보 조회", description = "로그인된 회원의 정보를 조회합니다.")
     @GetMapping("/me")
-    public ResponseEntity<MemberDTO> getMemberInfo(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<MemberDTO> getMemberInfo(
+            @AuthenticationPrincipal MemberDetails memberDetails) {
+//        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.ok(new MemberDTO(commonLookupService.findByMemberId(memberId)));
     }
 
@@ -75,17 +79,16 @@ public class MemberController {
     @Operation(summary = "회원 정보 수정", description = "로그인된 회원의 닉네임과 비밀번호를 수정합니다.")
     @PutMapping("/update")
     public ResponseEntity<String> updateMemberInfo(
-            HttpServletRequest request,
+            @AuthenticationPrincipal MemberDetails memberDetails,
 //            @RequestBody Map<String, String> requestBody,
-            @RequestBody UpdateProfileDTO dto)
-    {
+            @RequestBody UpdateProfileDTO dto) {
 
         if (dto.isEmpty()) {
             return ResponseEntity.badRequest().body("At least one field (nickname or password) must be provided");
         }
 
         // JWT에서 memberId 추출
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
 
         // 서비스 메서드 호출로 수정 진행
         String responseMessage = memberService.updateMemberInfo(memberId, dto.getNickname(), dto.getPassword());
@@ -100,8 +103,8 @@ public class MemberController {
 //    @GetMapping("/me/questions")
     @Operation(summary = "최근 작성한 질문 조회", description = "로그인된 회원이 작성한 최근 질문 목록을 조회합니다.")
     @GetMapping("/recent-questions")
-    public ResponseEntity<List<QuestionDTO>> getRecentQuestions(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<List<QuestionDTO>> getRecentQuestions(@AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         List<QuestionDTO> recentQuestions = questionService.findRecentQuestionsByMemberId(memberId);
         return ResponseEntity.ok(recentQuestions);
     }
@@ -112,8 +115,8 @@ public class MemberController {
     //    @GetMapping("/me/answers")
     @Operation(summary = "최근 작성한 답글 조회", description = "로그인된 회원이 작성한 최근 답글 목록을 조회합니다.")
     @GetMapping("/recent-answers")
-    public ResponseEntity<List<AnswerDTO>> getRecentAnswers(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<List<AnswerDTO>> getRecentAnswers(@AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         return ResponseEntity.ok(memberService.findRecentAnswersByMemberId(memberId));
     }
 
@@ -125,8 +128,8 @@ public class MemberController {
             summary = "가입한 스터디 수 조회", description = "가입한 스터디 수 조회합니다."
     )
     @GetMapping("/study-count")
-    public ResponseEntity<Long> getStudyCount(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<Long> getStudyCount(@AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         long count = studyMemberService.countStudiesByMemberId(memberId);
         return ResponseEntity.ok(count);
     }
@@ -139,8 +142,8 @@ public class MemberController {
             summary = "작성한 질문 수 조회", description = "작성한 질문 수 조회합니다."
     )
     @GetMapping("/question-count")
-    public ResponseEntity<Long> getQuestionCount(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<Long> getQuestionCount(@AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         long count = questionService.countQuestionsByMemberId(memberId);
         return ResponseEntity.ok(count);
     }
@@ -152,8 +155,8 @@ public class MemberController {
             summary = "작성한 답변 수 조회", description = "작성한 답변 수 조회합니다."
     )
     @GetMapping("/answer-count")
-    public ResponseEntity<Long> getAnswerCount(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<Long> getAnswerCount(@AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         long count = answerService.countAnswersByMemberId(memberId);
         return ResponseEntity.ok(count);
     }
@@ -164,9 +167,9 @@ public class MemberController {
 //    @DeleteMapping("/me")
     @Operation(summary = "회원 탈퇴", description = "로그인된 회원의 계정을 삭제합니다.")
     @DeleteMapping("/delete-account")
-    public ResponseEntity<String> deleteAccount(HttpServletRequest request) {
+    public ResponseEntity<String> deleteAccount(@AuthenticationPrincipal MemberDetails memberDetails) {
 
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         memberService.deleteAccount(memberId);
         return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
     }
@@ -179,8 +182,8 @@ public class MemberController {
             summary = "회원 스터디 목록 조회", description = "회원이 가입한 스터디 목록 조회합니다."
     )
     @GetMapping("/joined-groups")
-    public ResponseEntity<List<StudyDTO>> getJoinedGroups(HttpServletRequest request) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+    public ResponseEntity<List<StudyDTO>> getJoinedGroups(@AuthenticationPrincipal MemberDetails memberDetails) {
+        String memberId = memberDetails.getUsername();
         List<StudyDTO> joinedGroups = studyMemberService.findStudiesByMemberId(memberId);
         return ResponseEntity.ok(joinedGroups);
     }
@@ -192,18 +195,14 @@ public class MemberController {
             summary = "회원 스터디 목록 조회", description = "회원이 가입한 스터디 목록 조회합니다."
     )
     @GetMapping("/my-studies")
-    public ResponseEntity<List<StudyDTO>> getMyGroups() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public ResponseEntity<List<StudyDTO>> getMyGroups(
+            @AuthenticationPrincipal MemberDetails memberDetails) {
 
-        if (authentication != null && authentication.isAuthenticated()) {
-            String memberId = authentication.getName(); // 인증된 사용자 ID (memberId)
+        String memberId = memberDetails.getUsername(); // 인증된 사용자 ID (memberId)
+        List<StudyDTO> joinedGroups = studyMemberService.findApprovedStudiesByMemberId(memberId);
 
-            List<StudyDTO> joinedGroups = studyMemberService.findApprovedStudiesByMemberId(memberId);
+        return ResponseEntity.ok(joinedGroups);
 
-            return ResponseEntity.ok(joinedGroups);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
     }
 
 

@@ -12,7 +12,7 @@ import woongjin.gatherMind.constants.ProgressConstants;
 import woongjin.gatherMind.entity.Member;
 import woongjin.gatherMind.entity.Study;
 import woongjin.gatherMind.entity.StudyMember;
-import woongjin.gatherMind.enums.Role;
+import woongjin.gatherMind.enums.StudyRole;
 import woongjin.gatherMind.enums.MemberStatus;
 import woongjin.gatherMind.exception.unauthorized.UnauthorizedActionException;
 import woongjin.gatherMind.exception.notFound.MemberNotFoundException;
@@ -57,7 +57,7 @@ public class StudyService {
         Study savedStudy = studyRepository.save(study);
 
         StudyMember studyMember = createStudyMember(savedStudy, member,
-                Role.ADMIN, MemberStatus.APPROVED, ProgressConstants.NOT_STARTED);
+                StudyRole.ADMIN, MemberStatus.APPROVED, ProgressConstants.NOT_STARTED);
         studyMemberRepository.save(studyMember);
 
         return savedStudy;
@@ -148,7 +148,7 @@ public class StudyService {
 
         Study study = commonLookupService.findStudyByStudyId(studyId);
 
-        Pageable pageable = PageRequest.of(0, 5);
+        Pageable pageable = PageRequest.of(0, 9);
         Page<QuestionWithoutAnswerDTO> result = questionRepository
                 .findByStudyMember_Study_StudyIdOrderByCreatedAtDesc(studyId, pageable);
 
@@ -174,7 +174,7 @@ public class StudyService {
 
         commonLookupService.findStudyByStudyId(studyId);
 
-        Pageable pageable = PageRequest.of(0, 5);
+        Pageable pageable = PageRequest.of(0, 9);
         Page<QuestionWithoutAnswerDTO> result = questionRepository
                 .findByStudyMember_Study_StudyIdOrderByCreatedAtDesc(studyId, pageable);
 
@@ -260,6 +260,9 @@ public class StudyService {
         }
         if (studyData.getStatus() != null) {
             study.setStatus(studyData.getStatus());
+        }
+        if(study.getCategory() != studyData.getCategory()) {
+            study.setCategory(studyData.getCategory());
         }
     }
 

@@ -7,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import woongjin.gatherMind.DTO.FileUploadResponseDTO;
+import woongjin.gatherMind.auth.MemberDetails;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.service.FileService;
 
@@ -31,9 +33,9 @@ public class FileController {
             description = "에디터를 통해 첨부된 이미지 파일을 업로드합니다."
     )
     @PostMapping("/upload")
-    public ResponseEntity<List<String>> uploadFiles(HttpServletRequest request,
+    public ResponseEntity<List<String>> uploadFiles(@AuthenticationPrincipal MemberDetails memberDetails,
                                                     @RequestParam("files[]") List<MultipartFile> files) {
-        String memberId = jwtTokenProvider.extractMemberIdFromRequest(request);
+        String memberId = memberDetails.getUsername();
         List<String> fileUrls = new ArrayList<>();
         Boolean isContentEmbedded = true;
         try {

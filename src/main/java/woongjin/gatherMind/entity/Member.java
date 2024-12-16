@@ -1,20 +1,19 @@
 package woongjin.gatherMind.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import woongjin.gatherMind.converters.RoleConverter;
+
+import woongjin.gatherMind.enums.Role;
 import woongjin.gatherMind.enums.CustomAuthProvider;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -25,20 +24,19 @@ public class Member {
 
     @Column(unique = true)
     private String nickname;
-
+    @Column(nullable = false, unique = true)
     private String email;
-
     private String password;
 
-    private boolean isEmailVerified = false; // 초기값 false
+    @Convert(converter = RoleConverter.class)
+    private Role role = Role.USER;
 
     @Column(nullable = false)
     private String profileImage = "/api/files/default-profile";
 
-    private Boolean isDeleted = false;
+    private Boolean isDelete = false;
 
-    @Column(unique = true)
-    private String oauthId;
+    private String oauthId = null;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -51,4 +49,11 @@ public class Member {
     // Member - StudyMember (1:N)
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<StudyMember> studyMembers;
+
+    public Member (String randomMemberId, CustomAuthProvider oauthProvider, String oauthId, String email){
+        this.memberId = randomMemberId;
+        this.oauthProvider  = oauthProvider;
+        this.oauthId = oauthId;
+        this.email = email;
+    }
 }

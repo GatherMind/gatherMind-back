@@ -43,6 +43,7 @@ public class Study {
         study.setStatus(dto.getStatus());
         study.setTitle(dto.getTitle());
         study.setDescription(dto.getDescription());
+        study.setCategory(dto.getCategory());
         return study;
     }
 
