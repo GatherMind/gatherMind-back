@@ -8,14 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import woongjin.gatherMind.DTO.LoginDTO;
-import woongjin.gatherMind.DTO.MemberDTO;
 import woongjin.gatherMind.DTO.PasswordVerifyDTO;
 import woongjin.gatherMind.DTO.RegisterDTO;
 import woongjin.gatherMind.config.JwtTokenProvider;
 import woongjin.gatherMind.entity.Member;
-import woongjin.gatherMind.repository.MemberRepository;
 import woongjin.gatherMind.service.CommonLookupService;
-import woongjin.gatherMind.service.EmailService;
 import woongjin.gatherMind.service.MemberService;
 
 import java.util.Collections;
@@ -27,7 +24,6 @@ import java.util.UUID;
 public class AuthController {
 
     private final MemberService memberService;
-    private final EmailService emailService;
     private final CommonLookupService commonLookupService;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -68,27 +64,14 @@ public class AuthController {
         return ResponseEntity.ok(memberService.PasswordVerify(memberId, passwordVerifyDTO));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDTO dto) {
+//    @PostMapping("/register")
+//    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDTO dto) {
+//
+//        Member savedMember = memberService.signup(dto);
+//
+//        return ResponseEntity.ok("Registration successful. Please check your email for verification.");
+//    }
 
-        Member savedMember = memberService.signup(dto);
-
-        String token = UUID.randomUUID().toString();
-        emailService.createVerificationToken(savedMember, token);
-
-        emailService.sendVerificationEmail(savedMember.getEmail(), token);
-
-        return ResponseEntity.ok("Registration successful. Please check your email for verification.");
-    }
-
-    @PostMapping("/test")
-    public ResponseEntity<?> test() {
-
-        String token = UUID.randomUUID().toString();
-        emailService.sendVerificationEmail("tnghks023@naver.com", token);
-
-        return ResponseEntity.ok("Registration successful. Please check your email for verification.");
-    }
 
 //    @GetMapping("/verify-email")
 //    public ResponseEntity<?> verifyEmail(@RequestParam("token") String token) {
