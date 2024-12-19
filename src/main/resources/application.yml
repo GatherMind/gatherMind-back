@@ -10,6 +10,58 @@ server:
   env: blue
 
 ---
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${OAUTH2_GOOGLE_CLIENT_ID}
+            client-secret: ${OAUTH2_GOOGLE_CLIENT_SECRET}
+            scope: openid, profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-authentication-method: post
+          github:
+            client-id: ${OAUTH2_GITHUB_CLIENT_ID}
+            client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
+            scope: user:email, read:user
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+          kakao:
+            client-id: ${OAUTH2_KAKAO_CLIENT_ID}
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: profile_nickname
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: id
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+
+logging:
+  level:
+    root: INFO
+    woongjin.gatherMind: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+
+# local
+---
 
 spring:
   config:
@@ -22,6 +74,7 @@ server:
 
 serverName: local_server
 
+# blue
 ---
 
 spring:
@@ -47,16 +100,32 @@ server:
 
 serverName: blue_server
 
+# Green
 ---
 
 spring:
   config:
     activate:
       on-profile: green
+  datasource:
+    url: jdbc:mysql://database-1.cnkkaoi62axj.ap-northeast-2.rds.amazonaws.com:3306/gather_mind
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: gatherMind
+
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      dialect: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        format_sql: true
 
 server:
-  port: 8081
-  serverAddress: 3.37.250.123
+  port: 8080
+  serverAddress: 52.79.114.234
 
 serverName: green_server
 
@@ -78,54 +147,11 @@ spring:
       path: /h2-console
 
   jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.H2Dialect
       format_sql: true
-
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${OAUTH2_GOOGLE_CLIENT_ID}
-            client-secret: ${OAUTH2_GOOGLE_CLIENT_SECRET}
-            scope: openid, profile, email
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            client-authentication-method: post
-          github:
-            client-id: ${OAUTH2_GITHUB_CLIENT_ID}
-            client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
-            scope: user:email, read:user # 사용자 정보 읽기 권한
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}" # Callback URL
-            client-authentication-method: post
-            authorization-grant-type: authorization_code
-          kakao: # 카카오 추가
-            client-id: ${OAUTH2_KAKAO_CLIENT_ID} # 카카오 REST API 키
-            client-authentication-method: post
-            authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            scope: profile_nickname # 카카오 사용자 정보 권한
-        provider:
-          google:
-            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
-            token-uri: https://oauth2.googleapis.com/token
-            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-            user-name-attribute: sub
-          github:
-            authorization-uri: https://github.com/login/oauth/authorize
-            token-uri: https://github.com/login/oauth/access_token
-            user-info-uri: https://api.github.com/user
-            user-name-attribute: id # GitHub의 사용자 고유 ID 필드
-          kakao: # 카카오 제공자 설정
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token-uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
-            user-name-attribute: id
-
-
-logging:
-  level:
-    root: INFO
-    woongjin.gatherMind: DEBUG
-    org.springframework.security: DEBUG

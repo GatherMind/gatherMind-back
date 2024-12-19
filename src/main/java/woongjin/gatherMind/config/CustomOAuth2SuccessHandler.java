@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -23,6 +24,11 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
+
+    @Value("${server.port}")
+    private String serverPort;
+    @Value("${server.serverAddress}")
+    private String serverAddress;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -72,7 +78,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String jwt = jwtTokenProvider.generateTokenWithRole(member);
 
         // 리다이렉트 URL에 JWT 추가
-        String redirectUrl = "http://localhost:3000/dashboard?token=" + jwt;
+        String redirectUrl = "http://"+serverAddress+":"+serverAddress+"/dashboard?token=" + jwt;
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 
