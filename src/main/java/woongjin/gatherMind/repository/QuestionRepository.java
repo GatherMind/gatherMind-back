@@ -19,7 +19,7 @@ public interface QuestionRepository  extends JpaRepository<Question, Long> {
 
     Page<QuestionWithoutAnswerDTO> findByStudyMember_Study_StudyIdOrderByCreatedAtDesc(Long studyId, Pageable pageable);
 
-    List<Question> findTop3ByStudyMember_Member_MemberIdOrderByCreatedAtDesc(String memberId);
+    List<Question> findByStudyMember_Member_MemberIdOrderByCreatedAtDesc(String memberId);
 
     // QuestionRepository에 맞춤형 쿼리 메서드 추가
     @Query("SELECT new woongjin.gatherMind.DTO.QuestionDTO(q.id, q.content, q.title, m.memberId, s.title) " +

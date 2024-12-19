@@ -98,26 +98,26 @@ public class MemberController {
     }
 
     /**
-     * 최근 작성한 게시글(질문) 목록 조회
+     * 작성한 게시글(질문) 목록 조회
      */
 //    @GetMapping("/me/questions")
-    @Operation(summary = "최근 작성한 질문 조회", description = "로그인된 회원이 작성한 최근 질문 목록을 조회합니다.")
+    @Operation(summary = "작성한 질문 조회", description = "로그인된 회원이 작성한 질문 목록을 조회합니다.")
     @GetMapping("/recent-questions")
-    public ResponseEntity<List<QuestionDTO>> getRecentQuestions(@AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<List<QuestionDTO>> getMyQuestions(@AuthenticationPrincipal MemberDetails memberDetails) {
         String memberId = memberDetails.getUsername();
-        List<QuestionDTO> recentQuestions = questionService.findRecentQuestionsByMemberId(memberId);
+        List<QuestionDTO> recentQuestions = questionService.findQuestionsByMemberId(memberId);
         return ResponseEntity.ok(recentQuestions);
     }
 
     /**
-     * 최근 작성한 답글 목록 조회
+     * 작성한 답글 목록 조회
      */
     //    @GetMapping("/me/answers")
-    @Operation(summary = "최근 작성한 답글 조회", description = "로그인된 회원이 작성한 최근 답글 목록을 조회합니다.")
+    @Operation(summary = "작성한 답글 조회", description = "로그인된 회원이 작성한 답글 목록을 조회합니다.")
     @GetMapping("/recent-answers")
-    public ResponseEntity<List<AnswerDTO>> getRecentAnswers(@AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<List<AnswerDTO>> getMyAnswers(@AuthenticationPrincipal MemberDetails memberDetails) {
         String memberId = memberDetails.getUsername();
-        return ResponseEntity.ok(memberService.findRecentAnswersByMemberId(memberId));
+        return ResponseEntity.ok(memberService.findAnswersByMemberId(memberId));
     }
 
 

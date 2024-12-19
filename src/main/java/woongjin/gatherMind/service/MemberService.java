@@ -211,8 +211,8 @@ public class MemberService {
      * @param memberId    조회할 회원의 ID
      * @return 조회한 답글 DTO
      */
-    public List<AnswerDTO> findRecentAnswersByMemberId(String memberId) {
-        return answerRepository.findTop3ByMemberIdOrderByCreatedAtDesc(memberId)
+    public List<AnswerDTO> findAnswersByMemberId(String memberId) {
+        return answerRepository.findByMemberIdOrderByCreatedAtDesc(memberId)
                 .stream().map(AnswerDTO::new).toList();
     }
 
