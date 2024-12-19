@@ -165,10 +165,10 @@ public class QuestionService {
      * @param memberId 회원 ID
      * @return 질문 DTO 목록
      */
-    public List<QuestionDTO> findRecentQuestionsByMemberId(String memberId) {
-        List<Question> top3ByStudyMemberMemberMemberIdOrderByCreatedAtDesc =
-                questionRepository.findTop3ByStudyMember_Member_MemberIdOrderByCreatedAtDesc(memberId);
-        return top3ByStudyMemberMemberMemberIdOrderByCreatedAtDesc.stream().map(QuestionDTO::new).collect(Collectors.toList());
+    public List<QuestionDTO> findQuestionsByMemberId(String memberId) {
+        List<Question> findByStudyMemberMemberMemberIdOrderByCreatedAtDesc =
+                questionRepository.findByStudyMember_Member_MemberIdOrderByCreatedAtDesc(memberId);
+        return findByStudyMemberMemberMemberIdOrderByCreatedAtDesc.stream().map(QuestionDTO::new).collect(Collectors.toList());
     }
 
 

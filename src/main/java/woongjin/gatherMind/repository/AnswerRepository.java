@@ -23,7 +23,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query("SELECT a FROM Answer a WHERE a.memberId = :memberId ORDER BY a.createdAt DESC")
     List<Answer> findRecentAnswersByMemberId(@Param("memberId") String memberId);
 
-    List<Answer> findTop3ByMemberIdOrderByCreatedAtDesc(String memberId);
+    List<Answer> findByMemberIdOrderByCreatedAtDesc(String memberId);
 
     List<Answer> findByMemberId(String memberId); // Member ID로 답변 목록 조회
 
